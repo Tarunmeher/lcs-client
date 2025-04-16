@@ -6,7 +6,7 @@ import "aos/dist/aos.css";
 const About = () => {
     useEffect(() => {
         AOS.init({
-            duration: 3000, // Animation duration in milliseconds
+            duration: 1000, // Animation duration in milliseconds
             once: true, // Ensures animation runs only once
             easing: "ease-in-out",
         });

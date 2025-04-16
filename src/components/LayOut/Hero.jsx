@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import { FaGithub, FaLinkedin, FaFacebook, FaTwitter, FaYoutube, FaInstagram, FaWhatsapp } from "react-icons/fa";
+import {
+  FaGithub,
+  FaLinkedin,
+  FaFacebook,
+  FaTwitter,
+  FaYoutube,
+  FaInstagram,
+  FaWhatsapp,
+} from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { BsFillPersonLinesFill } from "react-icons/bs";
 import { HiArrowRight } from "react-icons/hi";
@@ -9,7 +17,7 @@ const slides = [
   {
     title: "Lambodar Higher Secondary School of Science",
     description: "Innovative e-learning solutions for the next generation of students.",
-    image: "https://cdn.pixabay.com/photo/2020/01/09/03/43/mansion-4751778_1280.jpg",
+    video: "https://cdn.pixabay.com/video/2022/12/20/143681-784129664_tiny.mp4",
   },
   {
     title: "TilloTamma Higher Secondary School of Science",
@@ -20,7 +28,7 @@ const slides = [
   {
     title: "Lambodar Public School",
     description: "Streamlined solutions for teachers, students, and administrators.",
-    image: "https://cdn.pixabay.com/photo/2017/10/10/00/03/child-2835430_1280.jpg",
+    video: 'https://cdn.pixabay.com/video/2021/10/05/90933-629483642_tiny.mp4', 
     link: "/lps-home",
   },
 ];
@@ -50,12 +58,37 @@ const Hero = () => {
       {slides.map((slide, index) => (
         <div
           key={index}
-          className={`absolute inset-0 transition-transform duration-700 ease-in-out ${index === currentSlide ? "translate-x-0" : "translate-x-full"}`}
+          className={`absolute inset-0 transition-transform duration-700 ease-in-out ${
+            index === currentSlide ? "translate-x-0" : "translate-x-full"
+          }`}
         >
-          <img src={slide.image} alt={slide.title} className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center text-white">
+          {slide.video ? (
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="w-full h-full object-cover"
+            >
+              <source src={slide.video} type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          ) : (
+            <img
+              src={slide.image}
+              alt={slide.title}
+              className="w-full h-full object-cover"
+            />
+          )}
+          <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center text-white text-center px-4">
             <h1 className="text-4xl font-bold">
-              <Typewriter words={[slide.title]} loop={false} typeSpeed={100} deleteSpeed={40} cursor />
+              <Typewriter
+                words={[slide.title]}
+                loop={false}
+                typeSpeed={100}
+                deleteSpeed={40}
+                cursor
+              />
             </h1>
             <p className="mt-4 text-xl">{slide.description}</p>
             {slide.link && (
@@ -75,10 +108,16 @@ const Hero = () => {
         </div>
       ))}
 
-      <button onClick={prevSlide} className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-50 p-4 rounded-full ml-4 hover:bg-opacity-75 z-20">
+      <button
+        onClick={prevSlide}
+        className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-50 p-4 rounded-full ml-4 hover:bg-opacity-75 z-20"
+      >
         &#10094;
       </button>
-      <button onClick={nextSlide} className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-50 p-4 rounded-full mr-4 hover:bg-opacity-75 z-20">
+      <button
+        onClick={nextSlide}
+        className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-50 p-4 rounded-full mr-4 hover:bg-opacity-75 z-20"
+      >
         &#10095;
       </button>
 
@@ -86,8 +125,16 @@ const Hero = () => {
       <div className="hidden lg:flex fixed flex-col top-[40%] left-0 z-20">
         <ul>
           {socialLinks.map((link, index) => (
-            <li key={index} className={`w-[160px] h-[40px] flex justify-between items-center ml-[-110px] hover:ml-[-1px] duration-300 ${link.bgColor}`}>
-              <a href={link.url} target="_blank" rel="noopener noreferrer" className="flex items-center justify-between w-full text-gray-300">
+            <li
+              key={index}
+              className={`w-[160px] h-[40px] flex justify-between items-center ml-[-110px] hover:ml-[-1px] duration-300 ${link.bgColor}`}
+            >
+              <a
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-between w-full text-gray-300"
+              >
                 {link.name} {link.icon}
               </a>
             </li>
