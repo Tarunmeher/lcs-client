@@ -9,8 +9,11 @@ const Login = () => {
 
     const handleLogin = (e) => {
         e.preventDefault();
-        console.log('Logging in with:', { username, password });
-        alert('Login clicked!');
+        if(username=='admin' && password=='admin'){
+            window.open("/admin");
+        }else{
+            alert('Username or Password is Invalid');
+        }
     };
 
     return (
@@ -29,7 +32,7 @@ const Login = () => {
                         <input
                             type="text"
                             className="w-full mt-1 p-3 rounded bg-white/10 text-white placeholder-white/60 outline-none"
-                            placeholder="Email or Phone"
+                            placeholder="Username"
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
                         />
