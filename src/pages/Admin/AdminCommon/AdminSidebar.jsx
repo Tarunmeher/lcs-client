@@ -84,12 +84,6 @@ const AdminSidebar = () => {
 
         {/* Bottom Section */}
         <div className="border-t border-gray-700">
-          <Link to='/admin/setting'>
-            <div className="flex items-center px-6 py-4 hover:bg-gray-700 transition cursor-pointer">
-              <FaCog className="text-lg" />
-              <span className="ml-4 font-semibold text-sm">Settings</span>
-            </div>
-          </Link>
           <Link to='/admin/help'>
             <div className="flex items-center px-6 py-4 hover:bg-gray-700 transition cursor-pointer">
               <FaQuestionCircle className="text-lg" />
