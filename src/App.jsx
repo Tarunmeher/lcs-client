@@ -24,7 +24,9 @@ import ManageEvent from "./pages/Admin/ManageEvent/ManageEvent";
 import ManageNewsAndNotification from "./pages/Admin/ManageNewsAndNotification/ManageNewsAndNotification";
 import ManageGallery from "./pages/Admin/ManageGallery/ManageGallery";
 import Login from "./pages/Admin/AdminLogin/Auth/Login";
-import SignUp from "./pages/Admin/AdminLogin/Auth/SignUp";
+import Setting from "./pages/Admin/setting/setting";
+import Help from "./pages/Admin/Help/Help";
+import MyProfile from "./pages/Admin/MyProfile/MyProfile";
 
 const App = () => {
   const location = useLocation();
@@ -75,9 +77,13 @@ const App = () => {
           <Route path="/admin/events" element={<ManageEvent />} />
           <Route path="/admin/notifications" element={<ManageNewsAndNotification />} />
           <Route path="/admin/gallery" element={<ManageGallery />} />
+          <Route path="/admin/setting" element={<Setting />} />
+          <Route path="/admin/help" element={<Help />} />
+          <Route path="/admin/my-profile" element={<MyProfile />} />
         </Route>
-        <Route path="/admin/login" element={<Login/>} />
-        <Route path="/admin/signup" element={<SignUp/>} />
+        <Route path="/admin/login" element={<Login />} />
+        {/* <Route path="/admin/signup" element={<SignUp />} /> */}
+
 
       </Routes>
     </div>

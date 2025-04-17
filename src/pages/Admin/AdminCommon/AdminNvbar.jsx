@@ -9,6 +9,7 @@ import {
   FaCog,
   FaSignOutAlt,
 } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const AdminNavbar = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -75,10 +76,12 @@ const AdminNavbar = () => {
 
         {dropdownOpen && (
           <div className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-lg overflow-hidden z-10">
-            <div className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 cursor-pointer">
-              <FaUser className="text-gray-600" />
-              <span className="text-sm">Profile</span>
-            </div>
+            <Link to='/admin/my-profile'>
+              <div className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                <FaUser className="text-gray-600" />
+                <span className="text-sm">Profile</span>
+              </div>
+            </Link>
             <div className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 cursor-pointer">
               <FaCog className="text-gray-600" />
               <span className="text-sm">Account</span>
