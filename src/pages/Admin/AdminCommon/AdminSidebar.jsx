@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect } from "react";
 import logo from '../../../assets/images/logo.png'
 import {
   FaTachometerAlt,
-  FaUserCircle,
   FaUsers,
   FaCalendarAlt,
   FaNewspaper,
@@ -12,16 +11,16 @@ import {
   FaBars,
   FaTimes,
 } from "react-icons/fa";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 const menuItems = [
   { label: "DASHBOARD", icon: <FaTachometerAlt />, path: "/admin" },
-  { label: "Manage Profile", icon: <FaUserCircle />, path: "/admin/profile" },
   { label: "Manage Staff", icon: <FaUsers />, path: "/admin/staff" },
   { label: "Manage Event", icon: <FaCalendarAlt />, path: "/admin/events" },
   { label: "Manage News & Notification", icon: <FaNewspaper />, path: "/admin/notifications" },
   { label: "Manage Gallery", icon: <FaImages />, path: "/admin/gallery" },
 ];
+
 
 const AdminSidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -85,14 +84,12 @@ const AdminSidebar = () => {
 
         {/* Bottom Section */}
         <div className="border-t border-gray-700">
-          <div className="flex items-center px-6 py-4 hover:bg-gray-700 transition cursor-pointer">
-            <FaCog className="text-lg" />
-            <span className="ml-4 font-semibold text-sm">Settings</span>
-          </div>
-          <div className="flex items-center px-6 py-4 hover:bg-gray-700 transition cursor-pointer">
-            <FaQuestionCircle className="text-lg" />
-            <span className="ml-4 font-semibold text-sm">Help</span>
-          </div>
+          <Link to='/admin/help'>
+            <div className="flex items-center px-6 py-4 hover:bg-gray-700 transition cursor-pointer">
+              <FaQuestionCircle className="text-lg" />
+              <span className="ml-4 font-semibold text-sm">Help</span>
+            </div>
+          </Link>
         </div>
       </div>
     </>

@@ -72,16 +72,6 @@ const Login = () => {
                         Facebook
                     </button>
                 </div>
-
-                {/* Sign Up Link */}
-                <div className="mt-6 text-center text-sm">
-                    Don't have an account?{' '}
-                    <Link to='/admin/signup'>
-                    <a href="#" className="text-blue-400 hover:underline">
-                        Sign Up
-                    </a>
-                    </Link>
-                </div>
             </div>
         </div>
     );
