@@ -1,10 +1,12 @@
 import { useState, useRef } from 'react';
 import { User, Settings, LogOut } from 'lucide-react';
 import { toast, ToastContainer } from 'react-toastify';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 
 const ProfileDropdown = ({ user, onTabChange }) => {
-    const [isOpen, setIsOpen] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);   
 
     return (
         <div className="relative">
@@ -14,13 +16,13 @@ const ProfileDropdown = ({ user, onTabChange }) => {
             >
                 <div className="w-8 h-8 rounded-full overflow-hidden border-2 border-white">
                     <img
-                        src={user.avatar}
+                        src={'http://localhost:3000/files/bijuu.jpg'}
                         alt={user.name}
                         className="w-full h-full object-cover"
                     />
                 </div>
                 <span className="hidden md:inline-block text-sm font-medium text-gray-700">
-                    Hi, {user.name.split(' ')[0]}
+                    Hi, {user.name}
                 </span>
             </button>
 
@@ -38,13 +40,6 @@ const ProfileDropdown = ({ user, onTabChange }) => {
                         Profile
                     </button>
                     <button
-                        onClick={() => { onTabChange('security'); setIsOpen(false); }}
-                        className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                    >
-                        <Settings className="w-4 h-4 mr-2" />
-                        Security
-                    </button>
-                    <button
                         onClick={() => console.log('Logging out...')}
                         className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                     >
@@ -60,15 +55,20 @@ const ProfileDropdown = ({ user, onTabChange }) => {
 const MyProfile = () => {
     const fileInputRef = useRef(null);
     const [activeTab, setActiveTab] = useState('profile');
-    const [user, setUser] = useState({
-        name: 'Dusmant Meher',
-        email: 'dusmant@example.com',
-        phone: '+1 (555) 123-4567',
-        role: 'Admin',
-        avatar: 'http://localhost:5173/src/assets/images/bijuu.jpg',
-        joinedDate: 'January 15, 2022',
-        lastLogin: 'Today, 10:30 AM'
-    });
+    const navigate = useNavigate();
+    useEffect(() => {
+        const userData = sessionStorage.getItem('userData');
+
+        if (!userData) {
+            navigate('/admin/login'); // Redirect if not logged in
+        } else {
+
+        }
+    }, [navigate]);
+
+    const user = JSON.parse(sessionStorage.getItem('userData')).results;
+    if (!user) return null; // Prevent render before redirect
+
     const [formData, setFormData] = useState({
         name: user.name,
         email: user.email,
@@ -113,10 +113,7 @@ const MyProfile = () => {
 
     const handleProfileSubmit = (e) => {
         e.preventDefault();
-        setUser(prev => ({
-            ...prev,
-            ...formData
-        }));
+        
         toast.success('Profile updated successfully!');
     };
 
@@ -151,7 +148,7 @@ const MyProfile = () => {
                                 <div className="flex-shrink-0">
                                     <div className="relative">
                                         <img
-                                            src={user.avatar}
+                                            src={'http://localhost:3000/files/bijuu.jpg'}
                                             alt="Profile"
                                             className="w-32 h-32 rounded-full border-4 border-blue-100"
                                         />
@@ -176,7 +173,7 @@ const MyProfile = () => {
                                 <div className="flex-1 space-y-4">
                                     <div>
                                         <h2 className="text-xl font-semibold text-gray-800">{user.name}</h2>
-                                        <p className="text-gray-600">{user.role}</p>
+                                        <p className="text-gray-600">{user.desgn}</p>
                                     </div>
 
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -186,11 +183,11 @@ const MyProfile = () => {
                                         </div>
                                         <div>
                                             <label className="block text-sm font-medium text-gray-500">Phone</label>
-                                            <p className="mt-1 text-sm text-gray-900">{user.phone}</p>
+                                            <p className="mt-1 text-sm text-gray-900">{user.mobile}</p>
                                         </div>
                                         <div>
                                             <label className="block text-sm font-medium text-gray-500">Joined</label>
-                                            <p className="mt-1 text-sm text-gray-900">{user.joinedDate}</p>
+                                            <p className="mt-1 text-sm text-gray-900">{user.created_at.split("T")[0]}</p>
                                         </div>
                                         <div>
                                             <label className="block text-sm font-medium text-gray-500">Last Login</label>
@@ -210,7 +207,7 @@ const MyProfile = () => {
                                                 type="text"
                                                 id="name"
                                                 name="name"
-                                                value={formData.name}
+                                                value={user.name}
                                                 onChange={handleProfileChange}
                                                 className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                                                 required
@@ -222,7 +219,7 @@ const MyProfile = () => {
                                                 type="email"
                                                 id="email"
                                                 name="email"
-                                                value={formData.email}
+                                                value={user.email}
                                                 onChange={handleProfileChange}
                                                 className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                                                 required
@@ -234,7 +231,7 @@ const MyProfile = () => {
                                                 type="tel"
                                                 id="phone"
                                                 name="phone"
-                                                value={formData.phone}
+                                                value={user.mobile}
                                                 onChange={handleProfileChange}
                                                 className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                                                 required
@@ -262,7 +259,7 @@ const MyProfile = () => {
                                         type="password"
                                         id="currentPassword"
                                         name="currentPassword"
-                                        value={passwordData.currentPassword}
+                                        value={user.password}
                                         onChange={handlePasswordChange}
                                         className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                                         required

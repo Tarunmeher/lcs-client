@@ -2,18 +2,38 @@ import React, { useState } from 'react';
 import { FcGoogle } from 'react-icons/fc';
 import { FaFacebook } from 'react-icons/fa';
 import { Link } from 'react-router-dom'; // If you're using React Router
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate();
 
-    const handleLogin = (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
-        if(username=='admin' && password=='admin'){
-            window.open("/admin");
-        }else{
-            alert('Username or Password is Invalid');
-        }
+        try {
+            const res = await fetch('http://localhost:3000/login', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                username:username,
+                password:password
+              }),
+            });
+            
+            const data = await res.json();
+            console.log(data)
+            if (res.ok) {
+              // Redirect to profile page with data
+              sessionStorage.setItem('userData', JSON.stringify(data));
+              navigate('/admin'); // send data to profile page
+            } else {
+              alert(data.message || 'Login failed');
+            }
+          } catch (err) {
+            console.error(err);
+            alert('Something went wrong');
+          }
     };
 
     return (

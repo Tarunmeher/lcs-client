@@ -1,5 +1,7 @@
 import { FaChalkboardTeacher, FaUserGraduate, FaUserTie, FaUserShield } from "react-icons/fa";
-import SalaryStatus from "./SalaryStatus";
+// import SalaryStatus from "./SalaryStatus";
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const stats = [
     {
@@ -29,6 +31,16 @@ const stats = [
 ];
 
 const AdminDashBoard = () => {
+    const navigate = useNavigate();
+
+    useEffect(() => {
+      const userData = sessionStorage.getItem('userData');
+
+      if (!userData) {
+        navigate('/admin/login'); // Redirect if not logged in
+      }
+    }, [navigate]);
+
     return (
         <>
             <div className="grid gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
@@ -47,9 +59,9 @@ const AdminDashBoard = () => {
                     </div>
                 ))}
             </div>
-            <div className="mt-10">
+            {/* <div className="mt-10">
                 <SalaryStatus />
-            </div>
+            </div> */}
 
         </>
     );
