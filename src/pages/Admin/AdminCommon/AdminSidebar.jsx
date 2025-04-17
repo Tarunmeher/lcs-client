@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import logo from '../../../assets/images/logo.png'
 import {
   FaTachometerAlt,
   FaUserCircle,
@@ -58,8 +59,8 @@ const AdminSidebar = () => {
         {/* Logo Section */}
         <div>
           <div className="flex items-center gap-2 px-6 py-6 border-b border-gray-700">
-            <div className="bg-green-500 font-bold text-white p-2 rounded-full text-xl">L</div>
-            <h1 className="text-lg font-bold tracking-wider">CS GROUP OF INSTITUTIONS</h1>
+            <img src={logo} alt="Logo" className="w-14 h-14 rounded-full" />
+            <h1 className="text-lg font-bold tracking-wider">LCS GROUP OF INSTITUTIONS</h1>
           </div>
 
           {/* Menu Items */}
@@ -69,8 +70,7 @@ const AdminSidebar = () => {
                 <NavLink
                   to={item.path}
                   className={({ isActive }) =>
-                    `flex items-center px-6 py-3 transition ${
-                      isActive ? "bg-gray-700" : "hover:bg-gray-700"
+                    `flex items-center px-6 py-3 transition ${isActive ? "bg-gray-700" : "hover:bg-gray-700"
                     }`
                   }
                   onClick={() => setIsOpen(false)} // Close menu on mobile

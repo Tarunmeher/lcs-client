@@ -23,7 +23,8 @@ import ManageStaff from "./pages/Admin/ManageStaff/ManageStaff";
 import ManageEvent from "./pages/Admin/ManageEvent/ManageEvent";
 import ManageNewsAndNotification from "./pages/Admin/ManageNewsAndNotification/ManageNewsAndNotification";
 import ManageGallery from "./pages/Admin/ManageGallery/ManageGallery";
-import AdminLogin from "./pages/Admin/AdminLogin/AdminLogin";
+import Login from "./pages/Admin/AdminLogin/Auth/Login";
+import SignUp from "./pages/Admin/AdminLogin/Auth/SignUp";
 
 const App = () => {
   const location = useLocation();
@@ -75,7 +76,9 @@ const App = () => {
           <Route path="/admin/notifications" element={<ManageNewsAndNotification />} />
           <Route path="/admin/gallery" element={<ManageGallery />} />
         </Route>
-        <Route path="/admin/login" element={<AdminLogin />} />
+        <Route path="/admin/login" element={<Login/>} />
+        <Route path="/admin/signup" element={<SignUp/>} />
+
       </Routes>
     </div>
   );
