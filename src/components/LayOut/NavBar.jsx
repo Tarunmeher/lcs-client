@@ -173,6 +173,13 @@ const Navbar = () => {
             </button>
           </Link>
 
+          {/* Added Login Button */}
+          <Link to="/admin/login">
+            <button className="bg-white text-[#014b8f] px-3 py-1 rounded-sm text-sm font-medium mr-2 hover:bg-gray-200">
+              Login
+            </button>
+          </Link>
+
           <button
             onClick={() => setIsBannerVisible(true)}
             className="bg-orange-500 text-black px-3 py-1 rounded-sm text-sm font-medium"
@@ -295,12 +302,19 @@ const Navbar = () => {
               </Link>
             </li>
 
-            <button
-              onClick={() => setIsBannerVisible(true)}
-              className="bg-orange-500 hover:bg-yellow-600 text-black px-3 py-1 rounded-md text-sm font-medium mt-2"
-            >
-              Apply
-            </button>
+            <div className="flex space-x-2 mt-2">
+              <Link to="/admin/login">
+                <button className="bg-white text-[#014b8f] px-3 py-1 rounded-md text-sm font-medium hover:bg-gray-200">
+                  Login
+                </button>
+              </Link>
+              <button
+                onClick={() => setIsBannerVisible(true)}
+                className="bg-orange-500 hover:bg-yellow-600 text-black px-3 py-1 rounded-md text-sm font-medium"
+              >
+                Apply
+              </button>
+            </div>
           </ul>
         )}
       </nav>

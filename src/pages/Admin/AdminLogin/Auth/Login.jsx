@@ -60,18 +60,6 @@ const Login = () => {
                         Log In
                     </button>
                 </form>
-
-                {/* Social Buttons */}
-                <div className="flex justify-between gap-4 mt-6">
-                    <button className="flex-1 bg-gray-800 text-white py-2 rounded flex items-center justify-center gap-2 hover:bg-gray-700">
-                        <FcGoogle className="w-5 h-5" />
-                        Google
-                    </button>
-                    <button className="flex-1 bg-gray-800 text-white py-2 rounded flex items-center justify-center gap-2 hover:bg-gray-700">
-                        <FaFacebook className="w-5 h-5 text-blue-500" />
-                        Facebook
-                    </button>
-                </div>
             </div>
         </div>
     );
