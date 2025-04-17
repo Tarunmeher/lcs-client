@@ -1,17 +1,42 @@
 import React, { useState } from "react";
+import { toast, ToastContainer } from 'react-toastify';
 
 const AddImageModal = ({ isOpen, onClose, onAdd }) => {
-  const [title, setTitle] = useState("");
+  const [folderName, setFolderName] = useState("");
   const [file, setFile] = useState(null);
 
   if (!isOpen) return null;
 
-  const handleSubmit = () => {
-    if (title && file) {
-      const previewUrl = URL.createObjectURL(file);
-      onAdd({ title, url: previewUrl }); // Pass title and preview URL
-      setTitle("");
-      setFile(null);
+  const handleSubmit = async () => {
+    if (folderName && file) {
+      // const previewUrl = URL.createObjectURL(file);
+      // onAdd({ title, url: previewUrl }); // Pass title and preview URL
+      
+      try {
+        var formdata = new FormData();
+        console.log(file);
+        formdata.append("file", file);
+        formdata.append("directoryName", folderName);
+
+        const res = await fetch(`${import.meta.env.VITE_SERVICE_URL}/uploadFile`, {
+          method: 'POST',
+          headers: {},
+          body: formdata,
+        });
+        
+        const data = await res.json();        
+        if (res.ok) {
+          toast.success(data.message);
+          setFolderName("");
+          setFile('');
+          onAdd();
+        } else {
+          toast.success(data.message);
+        }
+      } catch (err) {
+        console.error(err);
+        toast.success('Something went wrong');
+      }
     }
   };
 
@@ -24,8 +49,8 @@ const AddImageModal = ({ isOpen, onClose, onAdd }) => {
           type="text"
           placeholder="Image Title"
           className="w-full p-2 border rounded mb-4"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          value={folderName}
+          onChange={(e) => setFolderName(e.target.value)}
         />
 
         <input
@@ -45,12 +70,15 @@ const AddImageModal = ({ isOpen, onClose, onAdd }) => {
           <button
             onClick={handleSubmit}
             className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-            disabled={!file || !title}
+            disabled={!file || !folderName}
           >
             Add
           </button>
         </div>
       </div>
+
+       {/* ToastContainer added here */}
+       <ToastContainer position="top-right" autoClose={3000} />
     </div>
   );
 };

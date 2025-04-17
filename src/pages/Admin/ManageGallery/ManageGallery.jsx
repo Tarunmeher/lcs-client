@@ -1,22 +1,38 @@
 import React, { useState } from "react";
 import { Trash2 } from "lucide-react"; // You can use any icon lib, like Lucide or FontAwesome
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import AddImageModal from "./AddImageModal";
 
 const ManageGallery = () => {
   const [showModal, setShowModal] = useState(false);
   const [previewImage, setPreviewImage] = useState(null);
-  const [gallery, setGallery] = useState([
-    {
-      id: 1,
-      title: "Nature View",
-      url: "https://cdn.pixabay.com/photo/2024/03/11/15/25/trees-8626959_1280.jpg",
-    },
-    {
-      id: 2,
-      title: "City Lights",
-      url: "https://cdn.pixabay.com/photo/2022/08/02/04/11/city-7359472_1280.jpg",
-    },
-  ]);
+  const [gallery, setGallery] = useState(null);
+
+  async function fetchImages(){
+    try {
+      const res = await fetch(`${import.meta.env.VITE_SERVICE_URL}/getAllPhotos`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+        // body: JSON.stringify({}),
+      });
+      
+      const data = await res.json();
+      if (res.ok) {
+        setGallery(data.files);
+      } else {
+        setGallery(null);
+      }
+    } catch (err) {
+      console.error(err);
+      setGallery(null);
+    }
+  }
+
+  const navigate = useNavigate();
+  useEffect(() => {    
+    fetchImages();
+  }, [navigate]);
 
   const handleDelete = (id) => {
     const confirmDelete = window.confirm("Are you sure you want to delete this image?");
@@ -38,7 +54,7 @@ const ManageGallery = () => {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        {gallery.map((item) => (
+        {gallery && gallery.map((item) => (
           <div
             key={item.id}
             className="relative bg-white shadow rounded overflow-hidden"
@@ -60,12 +76,12 @@ const ManageGallery = () => {
               className="cursor-pointer"
             >
               <img
-                src={item.url}
-                alt={item.title}
+                src={`${import.meta.env.VITE_SERVICE_URL}/files/${item.name}`}
+                alt={item.filename}
                 className="w-full h-48 object-cover"
               />
               <div className="p-4">
-                <h3 className="text-lg font-medium">{item.title}</h3>
+                <h3 className="text-lg font-medium">{item.filename}</h3>
               </div>
             </div>
           </div>
@@ -77,8 +93,8 @@ const ManageGallery = () => {
         <AddImageModal
           isOpen={showModal}
           onClose={() => setShowModal(false)}
-          onAdd={(newItem) => {
-            setGallery([...gallery, { id: gallery.length + 1, ...newItem }]);
+          onAdd={() => {
+            fetchImages();
             setShowModal(false);
           }}
         />
@@ -96,12 +112,12 @@ const ManageGallery = () => {
             </button>
 
             <img
-              src={previewImage.url}
-              alt={previewImage.title}
+              src={`${import.meta.env.VITE_SERVICE_URL}/files/${previewImage.name}`}
+              alt={previewImage.filename}
               className="w-full h-auto max-h-[80vh] object-contain rounded"
             />
             <h2 className="text-center text-xl font-semibold mt-4">
-              {previewImage.title}
+              {previewImage.filename}
             </h2>
           </div>
         </div>

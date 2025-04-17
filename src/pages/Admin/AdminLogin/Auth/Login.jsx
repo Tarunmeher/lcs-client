@@ -8,11 +8,10 @@ const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
-
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            const res = await fetch('http://localhost:3000/login', {
+            const res = await fetch(`${import.meta.env.VITE_SERVICE_URL}/login`, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
