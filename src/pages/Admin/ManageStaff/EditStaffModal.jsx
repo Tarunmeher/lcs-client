@@ -1,5 +1,5 @@
 import React from "react";
-
+import { toast, ToastContainer } from 'react-toastify';
 const EditStaffModal = ({ isOpen, onClose, staffData, onSave }) => {
   if (!isOpen) return null;
 
@@ -13,10 +13,39 @@ const EditStaffModal = ({ isOpen, onClose, staffData, onSave }) => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onSave(formData);
-    onClose();
+    try {
+      const isAllEmpty = Object.values(formData).every(val => val.trim() === '');
+      if (isAllEmpty) {
+        return;
+      }
+      const currentUrl = window.location.href;
+      let url = import.meta.env.VITE_SERVICE_URL;
+      if (currentUrl.includes('https')) {
+        url = url.replace('http', 'https')
+      }
+      const res = await fetch(`${url}/addStaff`, {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json();
+      if (data.status == 'success') {
+        console.log(data)
+        toast.success(data.message);
+        onClose(data.results);
+      } else {
+        toast.error(data.message || 'Failed to Add');
+        onClose(data.results);
+      }
+    } catch (err) {
+      console.error(err);
+      toast.error('Something went wrong');
+    }
   };
 
   return (
@@ -43,6 +72,19 @@ const EditStaffModal = ({ isOpen, onClose, staffData, onSave }) => {
               onChange={handleChange}
               className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Department</label>
+            <select
+              name="department"
+              value={formData.department || ""}
+              onChange={handleChange}
+              className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="">--Select Department--</option>
+              <option value="Computer Science">Computer Science</option>
+              <option value="Mathematics">Mathematics</option>
+            </select>
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700">Phone</label>
@@ -81,6 +123,8 @@ const EditStaffModal = ({ isOpen, onClose, staffData, onSave }) => {
           </div>
         </form>
       </div>
+       {/* ToastContainer added here */}
+       <ToastContainer position="top-right" autoClose={3000} />
     </div>
   );
 };
