@@ -10,7 +10,7 @@ import {
   FaSignOutAlt,
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
-
+import { useNavigate } from 'react-router-dom';
 const AdminNavbar = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef();
@@ -25,6 +25,12 @@ const AdminNavbar = () => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  const navigate = useNavigate()
+  const logOut = () => {
+    sessionStorage.clear();
+    navigate('/admin/login');
+  };
 
   return (
     <div className="w-full bg-white shadow-md px-6 py-3 flex items-center justify-between">
@@ -88,7 +94,7 @@ const AdminNavbar = () => {
             </div>
             <div className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 cursor-pointer text-red-500">
               <FaSignOutAlt />
-              <span className="text-sm">Logout</span>
+              <span className="text-sm" onClick={logOut}>Logout</span>
             </div>
           </div>
         )}

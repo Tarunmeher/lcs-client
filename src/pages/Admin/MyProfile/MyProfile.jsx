@@ -16,7 +16,7 @@ const ProfileDropdown = ({ user, onTabChange }) => {
             >
                 <div className="w-8 h-8 rounded-full overflow-hidden border-2 border-white">
                     <img
-                        src={'http://localhost:3000/files/bijuu.jpg'}
+                        src={import.meta.env.VITE_SERVICE_URL+'/files/'+user.profile_pic}
                         alt={user.name}
                         className="w-full h-full object-cover"
                     />
@@ -148,7 +148,7 @@ const MyProfile = () => {
                                 <div className="flex-shrink-0">
                                     <div className="relative">
                                         <img
-                                            src={'http://localhost:3000/files/bijuu.jpg'}
+                                            src={import.meta.env.VITE_SERVICE_URL+'/files/'+user.profile_pic}
                                             alt="Profile"
                                             className="w-32 h-32 rounded-full border-4 border-blue-100"
                                         />
