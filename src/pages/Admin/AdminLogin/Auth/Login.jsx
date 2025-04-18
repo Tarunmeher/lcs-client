@@ -11,7 +11,12 @@ const Login = () => {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            const res = await fetch(`${import.meta.env.VITE_SERVICE_URL}/login`, {
+            const currentUrl = window.location.href;
+            let url = import.meta.env.VITE_SERVICE_URL;
+            if(currentUrl.includes('https')){
+                url = url.replace('http','https')
+            }
+            const res = await fetch(`${url}/login`, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({

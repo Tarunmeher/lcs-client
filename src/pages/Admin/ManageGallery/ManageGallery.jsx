@@ -9,14 +9,19 @@ const ManageGallery = () => {
   const [previewImage, setPreviewImage] = useState(null);
   const [gallery, setGallery] = useState(null);
 
-  async function fetchImages(){
+  async function fetchImages() {
     try {
-      const res = await fetch(`${import.meta.env.VITE_SERVICE_URL}/getAllPhotos`, {
+      const currentUrl = window.location.href;
+      let url = import.meta.env.VITE_SERVICE_URL;
+      if (currentUrl.includes('https')) {
+        url = url.replace('http', 'https')
+      }
+      const res = await fetch(`${url}/getAllPhotos`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
         // body: JSON.stringify({}),
       });
-      
+
       const data = await res.json();
       if (res.ok) {
         setGallery(data.files);
@@ -30,7 +35,7 @@ const ManageGallery = () => {
   }
 
   const navigate = useNavigate();
-  useEffect(() => {    
+  useEffect(() => {
     fetchImages();
   }, [navigate]);
 

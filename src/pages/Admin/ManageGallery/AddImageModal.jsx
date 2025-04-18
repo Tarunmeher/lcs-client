@@ -17,8 +17,12 @@ const AddImageModal = ({ isOpen, onClose, onAdd }) => {
         console.log(file);
         formdata.append("file", file);
         formdata.append("directoryName", folderName);
-
-        const res = await fetch(`${import.meta.env.VITE_SERVICE_URL}/uploadFile`, {
+        const currentUrl = window.location.href;
+        let url = import.meta.env.VITE_SERVICE_URL;
+        if(currentUrl.includes('https')){
+            url = url.replace('http','https')
+        }
+        const res = await fetch(`${url}/uploadFile`, {
           method: 'POST',
           headers: {},
           body: formdata,
