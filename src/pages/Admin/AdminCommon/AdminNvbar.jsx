@@ -88,10 +88,10 @@ const AdminNavbar = () => {
                 <span className="text-sm">Profile</span>
               </div>
             </Link>
-            <div className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 cursor-pointer">
+            {/* <div className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 cursor-pointer">
               <FaCog className="text-gray-600" />
               <span className="text-sm">Account</span>
-            </div>
+            </div> */}
             <div className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 cursor-pointer text-red-500">
               <FaSignOutAlt />
               <span className="text-sm" onClick={logOut}>Logout</span>
