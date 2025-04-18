@@ -3,6 +3,7 @@ import { Trash2 } from "lucide-react"; // You can use any icon lib, like Lucide 
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AddImageModal from "./AddImageModal";
+import toast from "react-hot-toast";
 
 const ManageGallery = () => {
   const [showModal, setShowModal] = useState(false);
@@ -39,10 +40,33 @@ const ManageGallery = () => {
     fetchImages();
   }, [navigate]);
 
-  const handleDelete = (id) => {
-    const confirmDelete = window.confirm("Are you sure you want to delete this image?");
-    if (confirmDelete) {
-      setGallery(gallery.filter((item) => item.id !== id));
+  const handleDelete = async (fid) => {
+    try {
+      const confirmDelete = window.confirm("Are you sure you want to delete this image?");
+      if (!confirmDelete) {
+        return;
+      }
+      const currentUrl = window.location.href;
+      let url = import.meta.env.VITE_SERVICE_URL;
+      if (currentUrl.includes('https')) {
+        url = url.replace('http', 'https')
+      }
+      const res = await fetch(`${url}/deleteFile`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({fid:fid})
+      });
+
+      const data = await res.json();
+      if (data.status=='success') {
+        toast.success(data.message);
+        setGallery(gallery.filter((item) => item.fid !== fid));
+      } else {
+        toast.error(data.message);
+      }
+    } catch (err) {
+      console.error(err);
+      toast.error(data.message);
     }
   };
 
@@ -61,14 +85,14 @@ const ManageGallery = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {gallery && gallery.map((item) => (
           <div
-            key={item.id}
+            key={item.fid}
             className="relative bg-white shadow rounded overflow-hidden"
           >
             {/* Delete Icon */}
             <button
               onClick={(e) => {
                 e.stopPropagation(); // Prevent triggering preview
-                handleDelete(item.id);
+                handleDelete(item.fid);
               }}
               className="absolute top-2 right-2 bg-white p-1 rounded-full shadow hover:bg-red-100"
               title="Delete"

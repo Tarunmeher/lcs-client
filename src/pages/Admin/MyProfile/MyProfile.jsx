@@ -6,26 +6,10 @@ import { useNavigate } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 
 const ProfileDropdown = ({ user, onTabChange }) => {
-    const [isOpen, setIsOpen] = useState(false);   
+    const [isOpen, setIsOpen] = useState(false);
 
     return (
         <div className="relative">
-            <button
-                onClick={() => setIsOpen(!isOpen)}
-                className="flex items-center space-x-2 focus:outline-none"
-            >
-                <div className="w-8 h-8 rounded-full overflow-hidden border-2 border-white">
-                    <img
-                        src={import.meta.env.VITE_SERVICE_URL+'/files/'+user.profile_pic}
-                        alt={user.name}
-                        className="w-full h-full object-cover"
-                    />
-                </div>
-                <span className="hidden md:inline-block text-sm font-medium text-gray-700">
-                    Hi, {user.name}
-                </span>
-            </button>
-
             {isOpen && (
                 <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
                     <div className="px-4 py-2 border-b">
@@ -56,6 +40,7 @@ const MyProfile = () => {
     const fileInputRef = useRef(null);
     const [activeTab, setActiveTab] = useState('profile');
     const navigate = useNavigate();
+
     useEffect(() => {
         const userData = sessionStorage.getItem('userData');
 
@@ -69,32 +54,13 @@ const MyProfile = () => {
     const user = JSON.parse(sessionStorage.getItem('userData')).results;
     if (!user) return null; // Prevent render before redirect
 
+
+    /**Profile Updation */
     const [formData, setFormData] = useState({
-        name: user.name,
-        email: user.email,
-        phone: user.phone
+        name: '',
+        email: '',
+        mobile: ''
     });
-    const [passwordData, setPasswordData] = useState({
-        currentPassword: '',
-        newPassword: '',
-        confirmPassword: ''
-    });
-
-    const handleImageChange = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setUser(prev => ({
-                    ...prev,
-                    avatar: reader.result
-                }));
-                toast.success('Profile picture updated successfully!');
-            };
-            reader.readAsDataURL(file);
-        }
-    };
-
     const handleProfileChange = (e) => {
         const { name, value } = e.target;
         setFormData(prev => ({
@@ -102,7 +68,52 @@ const MyProfile = () => {
             [name]: value
         }));
     };
+    const handleProfileSubmit = async (e) => {
+        e.preventDefault();        
+        try {
+            const isAllEmpty = Object.values(formData).every(val => val.trim() === '');
+            if(isAllEmpty){
+                return;
+            }
+            const currentUrl = window.location.href;
+            let url = import.meta.env.VITE_SERVICE_URL;
+            if (currentUrl.includes('https')) {
+                url = url.replace('http', 'https')
+            }
+            const res = await fetch(`${url}/updateProfile`, {
+                method: 'PUT',
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    uname:JSON.parse(sessionStorage.getItem('userData')).results.uname,
+                    name:formData.name,
+                    email:formData.email,
+                    mobile:formData.mobile
+                }),
+            });
 
+            const data = await res.json();
+            if (res.ok) {
+                toast.success(data.message);
+                sessionStorage.setItem('userData', JSON.stringify(data));
+                window.location.reload();
+            } else {
+                toast.error(data.message || 'Failed to Update');
+            }
+        } catch (err) {
+            console.error(err);
+            toast.error('Something went wrong');
+        }
+    };
+
+
+    /*Change Password*/
+    const [passwordData, setPasswordData] = useState({
+        currentPassword: '',
+        newPassword: '',
+        confirmPassword: ''
+    });
     const handlePasswordChange = (e) => {
         const { name, value } = e.target;
         setPasswordData(prev => ({
@@ -110,13 +121,6 @@ const MyProfile = () => {
             [name]: value
         }));
     };
-
-    const handleProfileSubmit = (e) => {
-        e.preventDefault();
-        
-        toast.success('Profile updated successfully!');
-    };
-
     const handlePasswordSubmit = (e) => {
         e.preventDefault();
         if (passwordData.newPassword !== passwordData.confirmPassword) {
@@ -128,8 +132,24 @@ const MyProfile = () => {
             newPassword: '',
             confirmPassword: ''
         });
-        toast.success('Password updated successfully!');
+        console.log(passwordData)
     };
+
+    /**Profile Picture Updation */
+    // const handleImageChange = (e) => {
+    //     const file = e.target.files[0];
+    //     if (file) {
+    //         const reader = new FileReader();
+    //         reader.onloadend = () => {
+    //             setUser(prev => ({
+    //                 ...prev,
+    //                 avatar: reader.result
+    //             }));
+    //             toast.success('Profile picture updated successfully!');
+    //         };
+    //         reader.readAsDataURL(file);
+    //     }
+    // };
 
     return (
         <>
@@ -148,11 +168,11 @@ const MyProfile = () => {
                                 <div className="flex-shrink-0">
                                     <div className="relative">
                                         <img
-                                            src={import.meta.env.VITE_SERVICE_URL+'/files/'+user.profile_pic}
+                                            src={import.meta.env.VITE_SERVICE_URL + '/files/' + user.profile_pic}
                                             alt="Profile"
                                             className="w-32 h-32 rounded-full border-4 border-blue-100"
                                         />
-                                        <button
+                                        {/* <button
                                             onClick={() => fileInputRef.current.click()}
                                             className="absolute bottom-0 right-0 bg-blue-600 text-white p-2 rounded-full hover:bg-blue-700 focus:outline-none"
                                         >
@@ -167,7 +187,7 @@ const MyProfile = () => {
                                             onChange={handleImageChange}
                                             accept="image/*"
                                             className="hidden"
-                                        />
+                                        /> */}
                                     </div>
                                 </div>
                                 <div className="flex-1 space-y-4">
@@ -191,7 +211,7 @@ const MyProfile = () => {
                                         </div>
                                         <div>
                                             <label className="block text-sm font-medium text-gray-500">Last Login</label>
-                                            <p className="mt-1 text-sm text-gray-900">{user.lastLogin}</p>
+                                            <p className="mt-1 text-sm text-gray-900">{user.logged_at}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -207,10 +227,11 @@ const MyProfile = () => {
                                                 type="text"
                                                 id="name"
                                                 name="name"
-                                                value={user.name}
+                                                value={formData.name}
+                                                placeholder={user.name}
                                                 onChange={handleProfileChange}
                                                 className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                                                required
+                                                
                                             />
                                         </div>
                                         <div>
@@ -219,22 +240,24 @@ const MyProfile = () => {
                                                 type="email"
                                                 id="email"
                                                 name="email"
-                                                value={user.email}
+                                                value={formData.email}
+                                                placeholder={user.email}
                                                 onChange={handleProfileChange}
                                                 className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                                                required
+                                                
                                             />
                                         </div>
                                         <div>
-                                            <label htmlFor="phone" className="block text-sm font-medium text-gray-700">Phone</label>
+                                            <label htmlFor="mobile" className="block text-sm font-medium text-gray-700">Phone</label>
                                             <input
                                                 type="tel"
-                                                id="phone"
-                                                name="phone"
-                                                value={user.mobile}
+                                                id="mobile"
+                                                name="mobile"
+                                                value={formData.mobile}
+                                                placeholder={user.mobile}
                                                 onChange={handleProfileChange}
                                                 className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                                                required
+                                                
                                             />
                                         </div>
                                     </div>

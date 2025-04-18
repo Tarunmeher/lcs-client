@@ -9,9 +9,6 @@ const AddImageModal = ({ isOpen, onClose, onAdd }) => {
 
   const handleSubmit = async () => {
     if (folderName && file) {
-      // const previewUrl = URL.createObjectURL(file);
-      // onAdd({ title, url: previewUrl }); // Pass title and preview URL
-      
       try {
         var formdata = new FormData();
         console.log(file);
@@ -19,27 +16,27 @@ const AddImageModal = ({ isOpen, onClose, onAdd }) => {
         formdata.append("directoryName", folderName);
         const currentUrl = window.location.href;
         let url = import.meta.env.VITE_SERVICE_URL;
-        if(currentUrl.includes('https')){
-            url = url.replace('http','https')
+        if (currentUrl.includes('https')) {
+          url = url.replace('http', 'https')
         }
         const res = await fetch(`${url}/uploadFile`, {
           method: 'POST',
           headers: {},
           body: formdata,
         });
-        
-        const data = await res.json();        
+
+        const data = await res.json();
         if (res.ok) {
           toast.success(data.message);
           setFolderName("");
           setFile('');
           onAdd();
         } else {
-          toast.success(data.message);
+          toast.error(data.message);
         }
       } catch (err) {
         console.error(err);
-        toast.success('Something went wrong');
+        toast.error('Something went wrong');
       }
     }
   };
@@ -81,8 +78,8 @@ const AddImageModal = ({ isOpen, onClose, onAdd }) => {
         </div>
       </div>
 
-       {/* ToastContainer added here */}
-       <ToastContainer position="top-right" autoClose={3000} />
+      {/* ToastContainer added here */}
+      <ToastContainer position="top-right" autoClose={3000} />
     </div>
   );
 };

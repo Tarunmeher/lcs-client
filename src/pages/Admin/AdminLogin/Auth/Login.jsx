@@ -29,6 +29,7 @@ const Login = () => {
             console.log()
             if (data.status=='success' && Object.keys(data.results).length) {
               // Redirect to profile page with data
+              data.results.logged_at = new Date().toLocaleTimeString()
               sessionStorage.setItem('userData', JSON.stringify(data));
               navigate('/admin'); // send data to profile page
             } else {

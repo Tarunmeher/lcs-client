@@ -39,33 +39,7 @@ const AdminNavbar = () => {
     <div className="w-full bg-white shadow-md px-6 py-3 flex items-center justify-between">
       {/* Left: Mail & Notification */}
       <div className="flex items-center gap-6">
-        {/* Mail */}
-        <div className="relative flex items-center gap-1">
-          <FaEnvelope className="text-green-500 text-xl" />
-          <span className="absolute -top-2 -right-3 bg-green-500 text-white text-xs w-6 h-6 flex items-center justify-center rounded-full border border-white">
-            84
-          </span>
-          <FaChevronDown className="ml-2 text-xs text-gray-500" />
-        </div>
-
-        {/* Notification */}
-        <div className="relative flex items-center gap-1">
-          <FaBell className="text-blue-500 text-xl" />
-          <span className="absolute -top-2 -right-3 bg-blue-500 text-white text-xs w-6 h-6 flex items-center justify-center rounded-full border border-white">
-            45
-          </span>
-          <FaChevronDown className="ml-2 text-xs text-gray-500" />
-        </div>
-
-        {/* Search Box */}
-        <div className="flex items-center bg-gray-100 px-3 py-1 rounded-md">
-          <FaSearch className="text-gray-500 text-sm" />
-          <input
-            type="text"
-            placeholder="search"
-            className="ml-2 bg-transparent focus:outline-none text-sm"
-          />
-        </div>
+        
       </div>
 
       {/* Right: User Info */}
