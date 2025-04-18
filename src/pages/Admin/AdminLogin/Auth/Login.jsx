@@ -21,13 +21,13 @@ const Login = () => {
             });
             
             const data = await res.json();
-            console.log(data)
-            if (res.ok) {
+            console.log()
+            if (data.status=='success' && Object.keys(data.results).length) {
               // Redirect to profile page with data
               sessionStorage.setItem('userData', JSON.stringify(data));
               navigate('/admin'); // send data to profile page
             } else {
-              alert(data.message || 'Login failed');
+              alert(data.message || 'Login failed. Invalid Credential');
             }
           } catch (err) {
             console.error(err);
