@@ -32,6 +32,9 @@ const AdminNavbar = () => {
     navigate('/admin/login');
   };
 
+  const user = JSON.parse(sessionStorage.getItem('userData')).results;
+  if (!user) return null; // Prevent render before redirect
+
   return (
     <div className="w-full bg-white shadow-md px-6 py-3 flex items-center justify-between">
       {/* Left: Mail & Notification */}
@@ -72,11 +75,11 @@ const AdminNavbar = () => {
           onClick={() => setDropdownOpen(!dropdownOpen)}
         >
           <img
-            src={profileImage}
+            src={import.meta.env.VITE_SERVICE_URL+'/files/'+user.profile_pic}
             alt="user"
             className="w-8 h-8 rounded-full object-cover"
           />
-          <span className="text-sm font-medium text-gray-700">Hi, Dusmant Meher</span>
+          <span className="text-sm font-medium text-gray-700">Hi, {user.name}</span>
           <FaChevronDown className="text-xs text-gray-500" />
         </div>
 
