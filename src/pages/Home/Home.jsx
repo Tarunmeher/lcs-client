@@ -17,7 +17,7 @@ const Home = () => {
 
     useEffect(() => {
         // Show the banner when the component mounts
-        setIsBannerVisible(true);
+        setIsBannerVisible(false);
     }, []);
     return (
         <>

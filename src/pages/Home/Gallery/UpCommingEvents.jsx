@@ -3,36 +3,36 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 
 const events = [
-  {
-    id: 1,
-    img: "https://images.pexels.com/photos/976866/pexels-photo-976866.jpeg?auto=compress&cs=tinysrgb&w=600", // Replace with actual image URL
-    location: "25/B Milford Road, New York",
-    date: "16 June, 2024",
-    time: "10.00AM - 04.00PM",
-    title: "High School Program 2024",
-    description:
-      "There are many variations of passages the majority have some injected humour.",
-  },
-  {
-    id: 2,
-    img: "https://images.pexels.com/photos/1190297/pexels-photo-1190297.jpeg?auto=compress&cs=tinysrgb&w=600",
-    location: "25/B Milford Road, New York",
-    date: "16 June, 2024",
-    time: "10.00AM - 04.00PM",
-    title: "High School Program 2024",
-    description:
-      "There are many variations of passages the majority have some injected humour.",
-  },
-  {
-    id: 3,
-    img: "https://images.pexels.com/photos/1157557/pexels-photo-1157557.jpeg?auto=compress&cs=tinysrgb&w=600",
-    location: "25/B Milford Road, New York",
-    date: "16 June, 2024",
-    time: "10.00AM - 04.00PM",
-    title: "High School Program 2024",
-    description:
-      "There are many variations of passages the majority have some injected humour.",
-  },
+  // {
+  //   id: 1,
+  //   img: "https://images.pexels.com/photos/976866/pexels-photo-976866.jpeg?auto=compress&cs=tinysrgb&w=600", // Replace with actual image URL
+  //   location: "25/B Milford Road, New York",
+  //   date: "16 June, 2024",
+  //   time: "10.00AM - 04.00PM",
+  //   title: "High School Program 2024",
+  //   description:
+  //     "There are many variations of passages the majority have some injected humour.",
+  // },
+  // {
+  //   id: 2,
+  //   img: "https://images.pexels.com/photos/1190297/pexels-photo-1190297.jpeg?auto=compress&cs=tinysrgb&w=600",
+  //   location: "25/B Milford Road, New York",
+  //   date: "16 June, 2024",
+  //   time: "10.00AM - 04.00PM",
+  //   title: "High School Program 2024",
+  //   description:
+  //     "There are many variations of passages the majority have some injected humour.",
+  // },
+  // {
+  //   id: 3,
+  //   img: "https://images.pexels.com/photos/1157557/pexels-photo-1157557.jpeg?auto=compress&cs=tinysrgb&w=600",
+  //   location: "25/B Milford Road, New York",
+  //   date: "16 June, 2024",
+  //   time: "10.00AM - 04.00PM",
+  //   title: "High School Program 2024",
+  //   description:
+  //     "There are many variations of passages the majority have some injected humour.",
+  // },
 ];
 
 export default function UpCommingEvents() {
@@ -53,7 +53,7 @@ export default function UpCommingEvents() {
         </p>
       </div>
       <div className="grid md:grid-cols-3 gap-8 w-full max-w-7xl">
-        {events.map((event) => (
+        {events && events.map((event) => (
           <div
             key={event.id}
             className="bg-white p-6 rounded-2xl shadow-lg" data-aos="zoom-in"

@@ -12,10 +12,10 @@ const events = [
 ];
 
 const galleryImages = [
-  "https://cdn.pixabay.com/photo/2020/03/27/19/27/building-4974676_1280.jpg",
-  "https://cdn.pixabay.com/photo/2019/12/22/07/00/berlin-4711917_1280.jpg",
-  "https://cdn.pixabay.com/photo/2024/08/31/06/40/college-9010619_1280.jpg",
-  "https://cdn.pixabay.com/photo/2017/11/13/16/39/ginkgo-2946131_1280.jpg",
+  import.meta.env.VITE_SERVICE_URL + '/siteimages/class4.jpg',
+  import.meta.env.VITE_SERVICE_URL + '/siteimages/office.jpg',
+  import.meta.env.VITE_SERVICE_URL + '/siteimages/boyshostel.jpg',
+  import.meta.env.VITE_SERVICE_URL + '/siteimages/class2.jpg',
 ];
 
 export default function EventGallery() {

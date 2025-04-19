@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const EventsBanner = () => {
     return (
-        <div className="relative w-full h-80 bg-cover bg-center" style={{ backgroundImage: "url('https://cdn.pixabay.com/photo/2017/09/08/00/38/friend-2727307_1280.jpg')" }}>
+        <div className="relative w-full h-80 bg-cover bg-center" style={{ backgroundImage: `url('${import.meta.env.VITE_SERVICE_URL+'/siteimages/collegebnr.jpg'}')` }}>
             <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-center">
                 <h1 className="text-white text-4xl font-bold">Events</h1>
                 <p className="text-white mt-2">

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   FaGithub,
   FaLinkedin,
@@ -14,22 +14,28 @@ import { HiArrowRight } from "react-icons/hi";
 import { Typewriter } from "react-simple-typewriter";
 
 const slides = [
+  // {
+  //   title: "Lambodar Higher Secondary School of Science",
+  //   description: "Innovative e-learning solutions for the next generation of students.",
+  //   image: import.meta.env.VITE_SERVICE_URL + '/siteimages/COLLEGE.jpg',
+  //   // link: "/tillotamma-home",
+  // },
   {
     title: "Lambodar Higher Secondary School of Science",
-    description: "Innovative e-learning solutions for the next generation of students.",
-    video: "https://cdn.pixabay.com/video/2022/12/20/143681-784129664_tiny.mp4",
+    description: "Shaping the future with quality education.",
+    image: import.meta.env.VITE_SERVICE_URL + '/siteimages/class4.jpg',
+    // link: "/tillotamma-home",
   },
   {
-    title: "TilloTamma Higher Secondary School of Science",
-    description: "Engaging tools and resources to make education fun and effective.",
-    image: "https://cdn.pixabay.com/photo/2018/10/22/18/02/teacher-3765909_1280.jpg",
-    link: "/tillotamma-home",
+    title: "Lambodar Higher Secondary School of Science",
+    description: "Shaping the future with quality education.",
+    image: import.meta.env.VITE_SERVICE_URL + '/siteimages/entrance.jpg',
   },
   {
-    title: "Lambodar Public School",
-    description: "Streamlined solutions for teachers, students, and administrators.",
-    video: 'https://cdn.pixabay.com/video/2021/10/05/90933-629483642_tiny.mp4', 
-    link: "/lps-home",
+    title: "Lambodar Higher Secondary School of Science",
+    description: "Shaping the future with quality education.",
+    image: import.meta.env.VITE_SERVICE_URL + '/siteimages/class6.jpg',
+    // link: "/lps-home",
   },
 ];
 
@@ -44,9 +50,17 @@ const socialLinks = [
 
 const Hero = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  useEffect(() => {
+    setTimeout(function(){
+      nextSlide();
+    },5000);
+  }, []);
 
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
+    setTimeout(function(){
+      nextSlide();
+    },5000);
   };
 
   const prevSlide = () => {
@@ -58,9 +72,8 @@ const Hero = () => {
       {slides.map((slide, index) => (
         <div
           key={index}
-          className={`absolute inset-0 transition-transform duration-700 ease-in-out ${
-            index === currentSlide ? "translate-x-0" : "translate-x-full"
-          }`}
+          className={`absolute inset-0 transition-transform duration-700 ease-in-out ${index === currentSlide ? "translate-x-0" : "translate-x-full"
+            }`}
         >
           {slide.video ? (
             <video
@@ -108,7 +121,7 @@ const Hero = () => {
         </div>
       ))}
 
-      <button
+      {/* <button
         onClick={prevSlide}
         className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-50 p-4 rounded-full ml-4 hover:bg-opacity-75 z-20"
       >
@@ -119,7 +132,7 @@ const Hero = () => {
         className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-50 p-4 rounded-full mr-4 hover:bg-opacity-75 z-20"
       >
         &#10095;
-      </button>
+      </button> */}
 
       {/* Social Icons */}
       <div className="hidden lg:flex fixed flex-col top-[40%] left-0 z-20">

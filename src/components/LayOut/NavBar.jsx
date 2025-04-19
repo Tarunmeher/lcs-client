@@ -54,9 +54,11 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="bg-[#014b8f] text-white shadow-md p-3 flex justify-between items-center relative">
+      <nav className="bg-[#014b8f] text-white shadow-md p-0 flex justify-between items-center relative">
         <Link to="/" className="flex items-center">
-          <img src={logo} alt="College Logo" className="h-14" />
+          <img src={import.meta.env.VITE_SERVICE_URL + '/siteimages/logo.png'}
+          style={{filter: "drop-shadow(0 0 1px white) drop-shadow(0 0 1px white) drop-shadow(0 0 5px white)" }}
+          alt="College Logo" className="h-20" />
         </Link>
 
         {/* Desktop Menu */}
@@ -160,7 +162,7 @@ const Navbar = () => {
                   }}
                   className="block px-3 py-1"
                 >
-                  Tillotamma
+                  Tilottama
                 </a>
               </div>
             )}
@@ -180,12 +182,12 @@ const Navbar = () => {
             </button>
           </Link>
 
-          <button
+          {/* <button
             onClick={() => setIsBannerVisible(true)}
             className="bg-orange-500 text-black px-3 py-1 rounded-sm text-sm font-medium"
           >
             Apply
-          </button>
+          </button> */}
         </ul>
 
         {/* Mobile Menu Button */}

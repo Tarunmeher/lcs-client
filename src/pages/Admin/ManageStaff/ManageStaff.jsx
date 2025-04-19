@@ -1,17 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import EditStaffModal from "./EditStaffModal";
-import { Pen, Trash2, Plus, Search } from 'lucide-react';
+import { Pen, Trash2, Plus, Search, Image } from 'lucide-react';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 const ManageStaff = () => {
   const [staffData, setStaffData] = useState([]);
   const [search, setSearch] = useState("");
+  const [org, setOrg] = useState("");
   const [designation, setDesignation] = useState("");
   const [department, setDepartment] = useState("");
   const [selectedStaff, setSelectedStaff] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [mode, setMode] = useState('add');
+  const [sid, setSid] = useState('');
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -32,12 +34,12 @@ const ManageStaff = () => {
       });
 
       const data = await res.json();
-      if (data.status=='success') {
-        if(data.results.length){
+      if (data.status == 'success') {
+        if (data.results.length) {
           setStaffData(data.results);
-        }else{
+        } else {
           toast.error('No Staff Found');
-        }        
+        }
       } else {
         setStaffData(null);
         toast.error(data.message || 'No Staff Found');
@@ -74,13 +76,13 @@ const ManageStaff = () => {
           headers: {
             "Content-Type": "application/json"
           },
-          body: JSON.stringify({sid:sid}),
+          body: JSON.stringify({ sid: sid }),
         });
-  
+
         const data = await res.json();
         if (data.status == 'success') {
           toast.success(data.message);
-          setTimeout(()=>{window.location.reload();},1000);
+          fetchStaff();
         } else {
           toast.error(data.message || 'Failed to Delete');
         }
@@ -99,11 +101,13 @@ const ManageStaff = () => {
   const closeModal = (status, data) => {
     setIsModalOpen(status);
     if (data) {
-      setStaffData(data);
+      if(data!='cancelled'){
+        setStaffData(data);
+      }
     }
 
-    if(mode=='edit'){
-      window.location.reload();
+    if (mode == 'edit' && data!='cancelled') {
+      fetchStaff();
     }
   }
 
@@ -111,9 +115,50 @@ const ManageStaff = () => {
     return (
       staff.name.toLowerCase().includes(search.toLowerCase()) &&
       (designation ? staff.designation === designation : true) &&
-      (department ? staff.department === department : true)
+      (department ? staff.department === department : true) &&
+      (org ? staff.org === org : true)
     );
   });
+
+  /**Profile Picture Updation */
+  const selectFile = (sid) => {
+    setSid(sid);
+    fileInputRef.current.click()
+  };
+  const fileInputRef = useRef(null);
+  const handleImageChange = async () => {
+    const file = fileInputRef.current?.files[0];
+    if (file) {
+      try {
+        var formdata = new FormData();
+        console.log(file);
+        formdata.append("file", file);
+        formdata.append("directoryName", '');
+        formdata.append("sid", sid);
+        const currentUrl = window.location.href;
+        let url = import.meta.env.VITE_SERVICE_URL;
+        if (currentUrl.includes('https')) {
+          url = url.replace('http', 'https')
+        }
+        const res = await fetch(`${url}/uploadFile`, {
+          method: 'POST',
+          headers: {},
+          body: formdata,
+        });
+
+        const data = await res.json();
+        if (res.ok) {
+          toast.success(data.message);
+          fetchStaff();
+        } else {
+          toast.error(data.message);
+        }
+      } catch (err) {
+        console.error(err);
+        toast.error('Something went wrong');
+      }
+    }
+  };
 
   return (
     <div className="p-6">
@@ -128,22 +173,46 @@ const ManageStaff = () => {
             className="border border-gray-300 rounded-md px-3 py-2 w-48 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           <select
+            value={org}
+            onChange={(e) => setOrg(e.target.value)}
+            className="border border-gray-300 rounded-md px-3 py-2 w-48 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="">All Branch</option>
+            <option value="LCS">LCS</option>
+            <option value="LPS">LPS</option>
+            <option value="Tilottama">Tilottama</option>
+          </select>
+          <select
             value={designation}
             onChange={(e) => setDesignation(e.target.value)}
             className="border border-gray-300 rounded-md px-3 py-2 w-48 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             <option value="">All Designations</option>
-            <option value="Professor">Professor</option>
-            <option value="Assistant Professor">Assistant Professor</option>
+            <option value="Principal">Principal</option>
+            <option value="Teaching">Teaching</option>
+            <option value="Non Teaching">Non Teaching</option>
+            <option value="Others">Others</option>
           </select>
           <select
             value={department}
             onChange={(e) => setDepartment(e.target.value)}
             className="border border-gray-300 rounded-md px-3 py-2 w-48 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
-            <option value="">All Departments</option>
+            <option value="">All Subject</option>
+            <option value="Multiple Subjects">Multiple Subjects</option>
+            <option value="Biology">Biology</option>
+            <option value="Chemistry">Chemistry</option>
             <option value="Computer Science">Computer Science</option>
+            <option value="Economics">Economics</option>
+            <option value="Electronics">Electronics</option>
+            <option value="Engineering Graphics">Engineering Graphics</option>
+            <option value="English">English</option>
+            <option value="Environmental Science">Environmental Science</option>
+            <option value="Informatics Practices">Informatics Practices</option>
             <option value="Mathematics">Mathematics</option>
+            <option value="Physical Education">Physical Education</option>
+            <option value="Physics">Physics</option>
+            <option value="Psychology">Psychology</option>
           </select>
           <button
             onClick={handleAdd}
@@ -159,6 +228,7 @@ const ManageStaff = () => {
             <thead className="bg-gray-100">
               <tr>
                 <th className="text-left px-4 py-2 border-b">Name</th>
+                <th className="text-left px-4 py-2 border-b">Branch</th>
                 <th className="text-left px-4 py-2 border-b">Designation</th>
                 <th className="text-left px-4 py-2 border-b">Department</th>
                 <th className="text-left px-4 py-2 border-b">Phone</th>
@@ -166,10 +236,17 @@ const ManageStaff = () => {
                 <th className="text-left px-4 py-2 border-b">Actions</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="text-sm">
               {filteredStaff && filteredStaff.map((staff) => (
                 <tr key={staff.sid} className="hover:bg-gray-50">
-                  <td className="px-4 py-2 border-b">{staff.name}</td>
+                  <td className="px-4 py-2 border-b d-flex">
+                    <img
+                      src={`${import.meta.env.VITE_SERVICE_URL}/files/${staff.profile_pic || 'maleAvatar.jpg'}`}
+                      alt={`Profile Picture`}
+                      className="h-5 w-5"
+                      style={{borderRadius:"50%",border:"1px solid green"}}
+                    />{staff.name}</td>
+                  <td className="px-4 py-2 border-b">{staff.org}</td>
                   <td className="px-4 py-2 border-b">{staff.designation}</td>
                   <td className="px-4 py-2 border-b">{staff.department}</td>
                   <td className="px-4 py-2 border-b">{staff.phone}</td>
@@ -178,15 +255,31 @@ const ManageStaff = () => {
                     <button
                       onClick={() => handleEdit(staff)}
                       className="text-blue-600 hover:underline"
+                      title="Edit Staff"
                     >
-                      Edit
+                      <Pen className="h-4 w-4" />
                     </button>
                     <button
                       onClick={() => handleDelete(staff.sid)}
                       className="text-red-600 hover:underline"
+                      title="Delete Staff"
                     >
-                      Delete
+                      <Trash2 className="h-4 w-4" />
                     </button>
+                    <button
+                      onClick={() => selectFile(staff.sid)}
+                      className="text-green-600 hover:underline"
+                      title="Update Profile Picture"
+                    >
+                      <Image className="h-4 w-4" />
+                    </button>
+                    <input
+                      type="file"
+                      ref={fileInputRef}
+                      onChange={() => handleImageChange()}
+                      accept="image/*"
+                      className="hidden"
+                    />
                   </td>
                 </tr>
               ))}

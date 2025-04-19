@@ -15,7 +15,7 @@ const EditStaffModal = ({ isOpen, onClose, staffData, onSave, mode }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if(mode=='add'){
+    if (mode == 'add') {
       try {
         const isAllEmpty = Object.values(formData).every(val => val.trim() === '');
         if (isAllEmpty) {
@@ -33,7 +33,7 @@ const EditStaffModal = ({ isOpen, onClose, staffData, onSave, mode }) => {
           },
           body: JSON.stringify(formData),
         });
-  
+
         const data = await res.json();
         if (data.status == 'success') {
           console.log(data)
@@ -47,9 +47,11 @@ const EditStaffModal = ({ isOpen, onClose, staffData, onSave, mode }) => {
         console.error(err);
         toast.error('Something went wrong');
       }
-    }else{
+    } else {
       try {
-        const isAllEmpty = Object.values(formData).every(val => String(val).trim() === '');
+        const isAllEmpty = Object.values(formData).every(val => {
+          return val == null || val.toString().trim() === '';
+        });
         if (isAllEmpty) {
           return;
         }
@@ -65,7 +67,7 @@ const EditStaffModal = ({ isOpen, onClose, staffData, onSave, mode }) => {
           },
           body: JSON.stringify(formData),
         });
-  
+
         const data = await res.json();
         if (data.status == 'success') {
           toast.success(data.message);
@@ -97,6 +99,20 @@ const EditStaffModal = ({ isOpen, onClose, staffData, onSave, mode }) => {
             />
           </div>
           <div>
+            <label className="block text-sm font-medium text-gray-700">Branch</label>
+            <select
+              name="org"
+              value={formData.org || ""}
+              onChange={handleChange}
+              className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="">Select Branch</option>
+              <option value="LCS">LCS</option>
+              <option value="LPS">LPS</option>
+              <option value="Tilottama">Tilottama</option>
+            </select>
+          </div>
+          <div>
             <label className="block text-sm font-medium text-gray-700">Designation</label>
             <select
               name="designation"
@@ -105,12 +121,14 @@ const EditStaffModal = ({ isOpen, onClose, staffData, onSave, mode }) => {
               className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="">--Select Designation--</option>
-              <option value="Professor">Professor</option>
-              <option value="Assistant Professor">Assistant Professor</option>
+              <option value="Principal">Principal</option>
+              <option value="Teaching">Teaching</option>
+              <option value="Non Teaching">Non Teaching</option>
+              <option value="Others">Others</option>
             </select>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700">Department</label>
+            <label className="block text-sm font-medium text-gray-700">Subject</label>
             <select
               name="department"
               value={formData.department || ""}
@@ -118,8 +136,20 @@ const EditStaffModal = ({ isOpen, onClose, staffData, onSave, mode }) => {
               className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="">--Select Department--</option>
+              <option value="Multiple Subjects">Multiple Subjects</option>
+              <option value="Biology">Biology</option>
+              <option value="Chemistry">Chemistry</option>
               <option value="Computer Science">Computer Science</option>
+              <option value="Economics">Economics</option>
+              <option value="Electronics">Electronics</option>
+              <option value="Engineering Graphics">Engineering Graphics</option>
+              <option value="English">English</option>
+              <option value="Environmental Science">Environmental Science</option>
+              <option value="Informatics Practices">Informatics Practices</option>
               <option value="Mathematics">Mathematics</option>
+              <option value="Physical Education">Physical Education</option>
+              <option value="Physics">Physics</option>
+              <option value="Psychology">Psychology</option>
             </select>
           </div>
           <div>
@@ -145,7 +175,7 @@ const EditStaffModal = ({ isOpen, onClose, staffData, onSave, mode }) => {
           <div className="flex justify-end pt-2">
             <button
               type="button"
-              onClick={() => onClose(false)}
+              onClick={() => onClose(false,'cancelled')}
               className="mr-2 px-4 py-2 text-sm rounded bg-gray-200 hover:bg-gray-300"
             >
               Cancel
@@ -159,8 +189,8 @@ const EditStaffModal = ({ isOpen, onClose, staffData, onSave, mode }) => {
           </div>
         </form>
       </div>
-       {/* ToastContainer added here */}
-       <ToastContainer position="top-right" autoClose={3000} />
+      {/* ToastContainer added here */}
+      <ToastContainer position="top-right" autoClose={3000} />
     </div>
   );
 };
