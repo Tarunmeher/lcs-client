@@ -173,20 +173,18 @@ const ManageEvent = () => {
                       {event.status}
                     </span>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium flex">
                     <button
                       onClick={() => handleEdit(event)}
                       className="text-blue-600 hover:text-blue-900 mr-3 flex items-center gap-1"
                     >
                       <Pen className="h-4 w-4" />
-                      Edit
                     </button>
                     <button
                       onClick={() => handleDelete(event.id)}
                       className="text-red-600 hover:text-red-900 flex items-center gap-1"
                     >
                       <Trash2 className="h-4 w-4" />
-                      Delete
                     </button>
                   </td>
                 </tr>

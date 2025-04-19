@@ -28,14 +28,14 @@ const NewsNotificationModal = ({
         <form onSubmit={onSubmit}>
           <div className="space-y-4">
             <div>
-              <label htmlFor="description" className="block text-sm font-medium text-gray-700">
-                Description
+              <label htmlFor="notification" className="block text-sm font-medium text-gray-700">
+                notification
               </label>
               <textarea
-                name="description"
-                id="description"
+                name="notification"
+                id="notification"
                 rows={3}
-                value={currentItem.description}
+                value={currentItem.notification}
                 onChange={handleInputChange}
                 required
                 className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
@@ -59,7 +59,15 @@ const NewsNotificationModal = ({
               </select>
             </div>
 
-            <div>
+            <input
+              name="file"
+              type="file"
+              accept="image/*"
+              className="w-full p-2 border rounded mb-4"
+              onChange={handleInputChange}
+            />
+
+            {/* <div>
               <label htmlFor="createdAt" className="block text-sm font-medium text-gray-700">
                 Created At
               </label>
@@ -72,7 +80,7 @@ const NewsNotificationModal = ({
                 required
                 className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               />
-            </div>
+            </div> */}
           </div>
 
           <div className="mt-5 sm:mt-6 sm:grid sm:grid-cols-2 sm:gap-3 sm:grid-flow-row-dense">
