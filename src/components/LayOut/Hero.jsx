@@ -14,12 +14,12 @@ import { HiArrowRight } from "react-icons/hi";
 import { Typewriter } from "react-simple-typewriter";
 
 const slides = [
-  // {
-  //   title: "Lambodar Higher Secondary School of Science",
-  //   description: "Innovative e-learning solutions for the next generation of students.",
-  //   image: import.meta.env.VITE_SERVICE_URL + '/siteimages/COLLEGE.jpg',
-  //   // link: "/tillotamma-home",
-  // },
+  {
+    title: "Lambodar Higher Secondary School of Science",
+    description: "Innovative e-learning solutions for the next generation of students.",
+    image: import.meta.env.VITE_SERVICE_URL + '/siteimages/collegebnr.jpg',
+    // link: "/tillotamma-home",
+  },
   {
     title: "Lambodar Higher Secondary School of Science",
     description: "Shaping the future with quality education.",

@@ -101,12 +101,12 @@ const ManageStaff = () => {
   const closeModal = (status, data) => {
     setIsModalOpen(status);
     if (data) {
-      if(data!='cancelled'){
+      if (data != 'cancelled') {
         setStaffData(data);
       }
     }
 
-    if (mode == 'edit' && data!='cancelled') {
+    if (mode == 'edit' && data != 'cancelled') {
       fetchStaff();
     }
   }
@@ -188,10 +188,12 @@ const ManageStaff = () => {
             className="border border-gray-300 rounded-md px-3 py-2 w-48 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             <option value="">All Designations</option>
+            <option value="Chairman">Chairman</option>
+            <option value="Secretary">Secretary</option>
             <option value="Principal">Principal</option>
             <option value="Teaching">Teaching</option>
             <option value="Non Teaching">Non Teaching</option>
-            <option value="Others">Others</option>
+            <option value="Other">Other</option>
           </select>
           <select
             value={department}
@@ -200,19 +202,16 @@ const ManageStaff = () => {
           >
             <option value="">All Subject</option>
             <option value="Multiple Subjects">Multiple Subjects</option>
-            <option value="Biology">Biology</option>
-            <option value="Chemistry">Chemistry</option>
-            <option value="Computer Science">Computer Science</option>
-            <option value="Economics">Economics</option>
-            <option value="Electronics">Electronics</option>
-            <option value="Engineering Graphics">Engineering Graphics</option>
+            <option value="Odia">Odia</option>
+            <option value="Hindi">Hindi</option>
             <option value="English">English</option>
-            <option value="Environmental Science">Environmental Science</option>
-            <option value="Informatics Practices">Informatics Practices</option>
-            <option value="Mathematics">Mathematics</option>
-            <option value="Physical Education">Physical Education</option>
             <option value="Physics">Physics</option>
-            <option value="Psychology">Psychology</option>
+            <option value="Chemistry">Chemistry</option>
+            <option value="Mathematics">Mathematics</option>
+            <option value="Botany">Botany</option>
+            <option value="Zoology">Zoology</option>
+            <option value="IT">IT</option>
+            <option value="Other">Other</option>
           </select>
           <button
             onClick={handleAdd}
@@ -244,7 +243,7 @@ const ManageStaff = () => {
                       src={`${import.meta.env.VITE_SERVICE_URL}/files/${staff.profile_pic || 'maleAvatar.jpg'}`}
                       alt={`Profile Picture`}
                       className="h-5 w-5"
-                      style={{borderRadius:"50%",border:"1px solid green"}}
+                      style={{ borderRadius: "50%", border: "1px solid green" }}
                     />{staff.name}</td>
                   <td className="px-4 py-2 border-b">{staff.org}</td>
                   <td className="px-4 py-2 border-b">{staff.designation}</td>

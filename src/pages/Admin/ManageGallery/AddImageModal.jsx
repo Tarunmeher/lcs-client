@@ -4,14 +4,15 @@ import { toast, ToastContainer } from 'react-toastify';
 const AddImageModal = ({ isOpen, onClose, onAdd }) => {
   const [folderName, setFolderName] = useState("");
   const [file, setFile] = useState(null);
+  const [uploading, setUploading] = useState(false);
 
   if (!isOpen) return null;
 
   const handleSubmit = async () => {
     if (folderName && file) {
       try {
+        setUploading(true);
         var formdata = new FormData();
-        console.log(file);
         formdata.append("file", file);
         formdata.append("directoryName", folderName);
         const currentUrl = window.location.href;
@@ -27,14 +28,17 @@ const AddImageModal = ({ isOpen, onClose, onAdd }) => {
 
         const data = await res.json();
         if (res.ok) {
+          setUploading(false);
           toast.success(data.message);
           setFolderName("");
           setFile('');
           onAdd();
         } else {
+          setUploading(false);
           toast.error(data.message);
         }
       } catch (err) {
+        setUploading(false);
         console.error(err);
         toast.error('Something went wrong');
       }
@@ -83,8 +87,37 @@ const AddImageModal = ({ isOpen, onClose, onAdd }) => {
 
       {/* ToastContainer added here */}
       <ToastContainer position="top-right" autoClose={3000} />
+
+
+      {uploading && (
+        <div style={{ marginTop: '20px', textAlign: 'center', position:'absolute',zIndex:9 }}>
+          {/* Spinner loader */}
+          <div style={{
+            width: '100px',
+            height: '100px',
+            border: '4px solid #f3f3f3',
+            borderTop: '4px solid #3498db',
+            borderRadius: '50%',
+            animation: 'spin 1s linear infinite',
+            margin: '0 auto'
+          }}></div>
+          <div>uploading....</div>
+        </div>
+      )}
+
+      {/* Add keyframes animation inline */}
+      <style>
+        {`
+          @keyframes spin {
+            to { transform: rotate(360deg); }
+          }
+        `}
+      </style>
     </div>
   );
 };
 
 export default AddImageModal;
+
+
+

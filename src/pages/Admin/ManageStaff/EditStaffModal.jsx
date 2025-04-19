@@ -121,10 +121,12 @@ const EditStaffModal = ({ isOpen, onClose, staffData, onSave, mode }) => {
               className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="">--Select Designation--</option>
+              <option value="Chairman">Chairman</option>
+              <option value="Secretary">Secretary</option>
               <option value="Principal">Principal</option>
               <option value="Teaching">Teaching</option>
               <option value="Non Teaching">Non Teaching</option>
-              <option value="Others">Others</option>
+              <option value="Other">Other</option>
             </select>
           </div>
           <div>
@@ -137,19 +139,16 @@ const EditStaffModal = ({ isOpen, onClose, staffData, onSave, mode }) => {
             >
               <option value="">--Select Department--</option>
               <option value="Multiple Subjects">Multiple Subjects</option>
-              <option value="Biology">Biology</option>
-              <option value="Chemistry">Chemistry</option>
-              <option value="Computer Science">Computer Science</option>
-              <option value="Economics">Economics</option>
-              <option value="Electronics">Electronics</option>
-              <option value="Engineering Graphics">Engineering Graphics</option>
+              <option value="Odia">Odia</option>
+              <option value="Hindi">Hindi</option>
               <option value="English">English</option>
-              <option value="Environmental Science">Environmental Science</option>
-              <option value="Informatics Practices">Informatics Practices</option>
-              <option value="Mathematics">Mathematics</option>
-              <option value="Physical Education">Physical Education</option>
               <option value="Physics">Physics</option>
-              <option value="Psychology">Psychology</option>
+              <option value="Chemistry">Chemistry</option>
+              <option value="Mathematics">Mathematics</option>
+              <option value="Botany">Botany</option>
+              <option value="Zoology">Zoology</option>
+              <option value="IT">IT</option>
+              <option value="Other">Other</option>
             </select>
           </div>
           <div>
@@ -175,7 +174,7 @@ const EditStaffModal = ({ isOpen, onClose, staffData, onSave, mode }) => {
           <div className="flex justify-end pt-2">
             <button
               type="button"
-              onClick={() => onClose(false,'cancelled')}
+              onClick={() => onClose(false, 'cancelled')}
               className="mr-2 px-4 py-2 text-sm rounded bg-gray-200 hover:bg-gray-300"
             >
               Cancel
