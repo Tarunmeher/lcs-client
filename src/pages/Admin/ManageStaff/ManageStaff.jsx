@@ -11,6 +11,7 @@ const ManageStaff = () => {
   const [department, setDepartment] = useState("");
   const [selectedStaff, setSelectedStaff] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [mode, setMode] = useState('add');
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -50,17 +51,43 @@ const ManageStaff = () => {
 
   const handleAdd = () => {
     setIsModalOpen(true);
+    setMode('add');
   };
 
   const handleEdit = (staff) => {
     setSelectedStaff(staff);
     setIsModalOpen(true);
+    setMode('edit');
   };
 
-  const handleDelete = (id) => {
+  const handleDelete = async (sid) => {
     const confirmed = window.confirm("Are you sure you want to delete this staff?");
     if (confirmed) {
-      setStaffData((prevData) => prevData.filter((staff) => staff.id !== id));
+      try {
+        const currentUrl = window.location.href;
+        let url = import.meta.env.VITE_SERVICE_URL;
+        if (currentUrl.includes('https')) {
+          url = url.replace('http', 'https')
+        }
+        const res = await fetch(`${url}/removeStaff`, {
+          method: 'DELETE',
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({sid:sid}),
+        });
+  
+        const data = await res.json();
+        if (data.status == 'success') {
+          toast.success(data.message);
+          setTimeout(()=>{window.location.reload();},1000);
+        } else {
+          toast.error(data.message || 'Failed to Delete');
+        }
+      } catch (err) {
+        console.error(err);
+        toast.error('Something went wrong');
+      }
     }
   };
 
@@ -73,6 +100,10 @@ const ManageStaff = () => {
     setIsModalOpen(status);
     if (data) {
       setStaffData(data);
+    }
+
+    if(mode=='edit'){
+      window.location.reload();
     }
   }
 
@@ -137,7 +168,7 @@ const ManageStaff = () => {
             </thead>
             <tbody>
               {filteredStaff && filteredStaff.map((staff) => (
-                <tr key={staff.id} className="hover:bg-gray-50">
+                <tr key={staff.sid} className="hover:bg-gray-50">
                   <td className="px-4 py-2 border-b">{staff.name}</td>
                   <td className="px-4 py-2 border-b">{staff.designation}</td>
                   <td className="px-4 py-2 border-b">{staff.department}</td>
@@ -151,7 +182,7 @@ const ManageStaff = () => {
                       Edit
                     </button>
                     <button
-                      onClick={() => handleDelete(staff.id)}
+                      onClick={() => handleDelete(staff.sid)}
                       className="text-red-600 hover:underline"
                     >
                       Delete
@@ -175,6 +206,7 @@ const ManageStaff = () => {
         onClose={(data) => closeModal(false, data)}
         staffData={selectedStaff}
         onSave={handleSave}
+        mode={mode}
       />
       {/* ToastContainer added here */}
       <ToastContainer position="top-right" autoClose={3000} />

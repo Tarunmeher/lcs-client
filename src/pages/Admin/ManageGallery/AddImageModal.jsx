@@ -46,13 +46,16 @@ const AddImageModal = ({ isOpen, onClose, onAdd }) => {
       <div className="bg-white rounded-lg p-6 w-full max-w-md">
         <h2 className="text-xl font-semibold mb-4">Add New Image</h2>
 
-        <input
+        <select
           type="text"
           placeholder="Image Title"
           className="w-full p-2 border rounded mb-4"
           value={folderName}
           onChange={(e) => setFolderName(e.target.value)}
-        />
+        >
+          <option value="common">Common</option>
+          <option value="campus">Campus</option>
+        </select>
 
         <input
           type="file"
