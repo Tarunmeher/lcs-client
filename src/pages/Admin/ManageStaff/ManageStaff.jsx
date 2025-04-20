@@ -161,21 +161,21 @@ const ManageStaff = () => {
   };
 
   return (
-    <div className="p-6">
+    <div className="p-4">
       <h1 className="text-2xl font-bold mb-4">Manage Staff</h1>
       <div className="bg-white rounded-lg shadow overflow-hidden">
-        <div className="flex justify-between items-center gap-3 mb-4 p-4 ">
+        <div className="flex justify-between items-center gap-2 mb-4 p-4 ">
           <input
             type="text"
             placeholder="Search by name"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="border border-gray-300 rounded-md px-3 py-2 w-48 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="border border-gray-300 rounded-md px-3 py-2 w-58 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           <select
             value={org}
             onChange={(e) => setOrg(e.target.value)}
-            className="border border-gray-300 rounded-md px-3 py-2 w-48 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="border border-gray-300 rounded-md px-3 py-2 w-35 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             <option value="">All Branch</option>
             <option value="LCS">LCS</option>
@@ -218,14 +218,15 @@ const ManageStaff = () => {
             className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition duration-200 flex items-center gap-2"
           >
             <Plus className="h-4 w-4" />
-            Add New Staff
+            Add New
           </button>
         </div>
 
         <div className="overflow-x-auto">
+          <div className="p-1">Total : <strong>{filteredStaff.length}</strong></div>
           <table className="min-w-full border border-gray-200">
             <thead className="bg-gray-100">
-              <tr>
+              <tr>                
                 <th className="text-left px-4 py-2 border-b">Name</th>
                 <th className="text-left px-4 py-2 border-b">Branch</th>
                 <th className="text-left px-4 py-2 border-b">Designation</th>
@@ -238,13 +239,13 @@ const ManageStaff = () => {
             <tbody className="text-sm">
               {filteredStaff && filteredStaff.map((staff) => (
                 <tr key={staff.sid} className="hover:bg-gray-50">
-                  <td className="px-4 py-2 border-b d-flex">
+                  <td className="px-4 py-2 border-b flex">
                     <img
                       src={`${import.meta.env.VITE_SERVICE_URL}/files/${staff.profile_pic || 'maleAvatar.jpg'}`}
                       alt={`Profile Picture`}
                       className="h-5 w-5"
                       style={{ borderRadius: "50%", border: "1px solid green" }}
-                    />{staff.name}</td>
+                    />&nbsp;{staff.name}</td>
                   <td className="px-4 py-2 border-b">{staff.org}</td>
                   <td className="px-4 py-2 border-b">{staff.designation}</td>
                   <td className="px-4 py-2 border-b">{staff.department}</td>

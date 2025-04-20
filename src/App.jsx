@@ -47,7 +47,7 @@ const App = () => {
             <Route path="Gallery/lcs-gallery" element={<Gallery />} />
             <Route path="Gallery/lcs-events" element={<Events />} />
             <Route path="About/about-lcs" element={<AboutUs />} />
-            <Route path="Academics/faculty/staf-details" element={<StafDetails />} />
+            <Route path="Academics/staff/staf-details" element={<StafDetails />} />
             <Route path="teacher/:id" element={<TeacherInfo />} />
             <Route path="Notification" element={<Notification />} />
           </Route>

@@ -12,24 +12,24 @@ const staffData = [
     },
     {
         id: 2,
-        name: "Mr. John Smith",
+        name: "Rohit sharma",
         experience: "7 Years",
         profession: "Computer Science Lecturer",
-        image: "https://cdn.pixabay.com/photo/2024/05/23/20/18/ai-generated-8783789_1280.jpg",
+        image: "https://cdn.pixabay.com/photo/2024/01/12/14/14/ai-generated-8504034_1280.jpg",
     },
     {
         id: 3,
         name: "kl rahul",
         experience: "5 Years",
         profession: "Librarian",
-        image: "https://cdn.pixabay.com/photo/2024/05/23/20/18/ai-generated-8783789_1280.jpg",
+        image: "https://cdn.pixabay.com/photo/2019/06/29/04/36/counselor-4305394_1280.jpg",
     },
     {
         id: 4,
         name: "vaivab sharma",
         experience: "12 Years",
         profession: "Dean of Students",
-        image: "https://cdn.pixabay.com/photo/2024/05/23/20/18/ai-generated-8783789_1280.jpg",
+        image: "https://cdn.pixabay.com/photo/2015/08/02/23/38/agnar-hoeskuldsson-872408_1280.jpg",
     },
 ];
 

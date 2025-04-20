@@ -57,8 +57,8 @@ const Navbar = () => {
       <nav className="bg-[#014b8f] text-white shadow-md p-0 flex justify-between items-center relative">
         <Link to="/" className="flex items-center">
           <img src={import.meta.env.VITE_SERVICE_URL + '/siteimages/logo.png'}
-          style={{filter: "drop-shadow(0 0 1px white) drop-shadow(0 0 1px white) drop-shadow(0 0 5px white)" }}
-          alt="College Logo" className="h-20" />
+            style={{ filter: "drop-shadow(0 0 1px white) drop-shadow(0 0 1px white) drop-shadow(0 0 5px white)" }}
+            alt="College Logo" className="h-20" />
         </Link>
 
         {/* Desktop Menu */}
@@ -119,11 +119,8 @@ const Navbar = () => {
                 <Link to="/examination" className="block px-3 py-1">
                   Examination
                 </Link>
-                <Link to="/Academics/faculty/staf-details" className="block px-3 py-1">
-                  Faculty
-                </Link>
-                <Link to="/scholarships-fellowship" className="block px-3 py-1">
-                  Scholarships & Fellowship
+                <Link to="/Academics/staff/staf-details" className="block px-3 py-1">
+                  Staff
                 </Link>
                 <Link to="/notification" className="block px-3 py-1">
                   Notification
@@ -262,11 +259,8 @@ const Navbar = () => {
                   <Link to="/examination" className="block px-3 py-1">
                     Examination
                   </Link>
-                  <Link to="/Academics/faculty/staf-details" className="block px-3 py-1">
-                    Faculty
-                  </Link>
-                  <Link to="/scholarships-fellowship" className="block px-3 py-1">
-                    Scholarships & Fellowship
+                  <Link to="/Academics/staff/staf-details" className="block px-3 py-1">
+                    Staff
                   </Link>
                   <Link to="/notification" className="block px-3 py-1">
                     Notification
