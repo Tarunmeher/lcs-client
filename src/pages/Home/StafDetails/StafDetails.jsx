@@ -1,8 +1,13 @@
 import React from 'react'
+import StafBanner from './StafBanner'
+import StafDetail from './StafDetail'
 
 const StafDetails = () => {
   return (
-    <div>StafDetails</div>
+    <>
+      <StafBanner />
+      <StafDetail />
+    </>
   )
 }
 
