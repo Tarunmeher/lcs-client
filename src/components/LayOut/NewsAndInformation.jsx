@@ -6,6 +6,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import '../../assets/css/mobile.css';
 
 const newsData = [
     "Breaking: New policies announced for 2025!",
@@ -45,7 +46,7 @@ const NewsInfoComponent = () => {
     return (
         <div className="p-4 mt-10">
             <h1 className="text-2xl font-bold text-center mb-4" data-aos='fade-down'>News & Notifications</h1>
-            <div className="flex flex-col md:flex-row gap-4 h-[300px]">
+            <div className="flex flex-col md:flex-row gap-4 h-[300px] homenewnotificationbox">
                 {/* Left Side - News Slider */}
                 <div className="w-full md:w-1/2 bg-white p-4 shadow-md h-[280px] overflow-hidden" data-aos="fade-right">
                     <h2 className="text-xl font-bold mb-2">Latest News</h2>
@@ -59,7 +60,7 @@ const NewsInfoComponent = () => {
                 </div>
 
                 {/* Right Side - Notification Links */}
-                <div className="w-full md:w-1/2 bg-white p-4 shadow-md h-[280px] overflow-hidden" data-aos="fade-left">
+                <div className="w-full md:w-1/2 bg-white p-4 shadow-md h-[280px] overflow-hidden homenewnotificationbox" data-aos="fade-left">
                     <h2 className="text-xl font-bold mb-2">Notifications</h2>
                     <div className="relative h-[220px] overflow-hidden">
                         <motion.div

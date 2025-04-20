@@ -48,11 +48,11 @@ const WhyChooseUs = () => {
                 </p>
             </div>
 
-            <div className="mt-10 p-8 rounded-xl max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="mt-10 p-8 rounded-xl max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 whycardparent">
                 {data.map((item, index) => (
                     <div
                         key={index}
-                        className={`p-6 rounded-xl shadow-lg drop-shadow-lg text-center cursor-pointer hover:scale-105 duration-500 transition-all text-white ${item.bgColor}`}
+                        className={`whycard p-6 rounded-xl shadow-lg drop-shadow-lg text-center cursor-pointer hover:scale-105 duration-500 transition-all text-white ${item.bgColor}`}
                     >
                         <div className="bg-white p-4 w-16 h-16 mx-auto rounded-lg flex items-center justify-center shadow-md">
                             <span className="text-4xl text-gray-800">{item.icon}</span>

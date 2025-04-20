@@ -3,6 +3,7 @@ import { FaBars } from "react-icons/fa";
 import { Link, useLocation } from "react-router-dom";
 import SummerCourseBanner from "../Banner/SummerCourseBanner";
 import logo from "../../assets/images/logo.png";
+import '../../assets/css/mobile.css';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -54,7 +55,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="bg-[#014b8f] text-white shadow-md p-0 flex justify-between items-center relative">
+      <nav className="bg-[#014b8f] text-white shadow-md p-1 flex justify-between items-center relative">
         <Link to="/" className="flex items-center">
           <img src={import.meta.env.VITE_SERVICE_URL + '/siteimages/logo.png'}
             style={{ filter: "drop-shadow(0 0 1px white) drop-shadow(0 0 1px white) drop-shadow(0 0 5px white)" }}
@@ -189,6 +190,7 @@ const Navbar = () => {
 
         {/* Mobile Menu Button */}
         <button
+          id="mobileMenulist"
           ref={buttonRef}
           className="md:hidden text-white"
           onClick={() => setIsOpen(!isOpen)}
@@ -199,6 +201,7 @@ const Navbar = () => {
         {/* Mobile Menu */}
         {isOpen && (
           <ul
+            id="menulist"
             ref={menuRef}
             className="absolute top-14 left-0 w-full bg-sky-900 shadow-md md:hidden flex flex-col space-y-2 p-4 text-sm font-medium z-50"
           >
@@ -230,7 +233,7 @@ const Navbar = () => {
               )} */}
               </li>
             </Link>
-            <li className="relative group dropdown-container">
+            <li className="relative group dropdown-container gallerycont">
               <button onClick={(e) => { e.stopPropagation(); toggleDropdown(5); }} className="text-white focus:outline-none text-sm">
                 GALLERY ▾
               </button>
@@ -304,12 +307,12 @@ const Navbar = () => {
                   Login
                 </button>
               </Link>
-              <button
+              {/* <button
                 onClick={() => setIsBannerVisible(true)}
                 className="bg-orange-500 hover:bg-yellow-600 text-black px-3 py-1 rounded-md text-sm font-medium"
               >
                 Apply
-              </button>
+              </button> */}
             </div>
           </ul>
         )}

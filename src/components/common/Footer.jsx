@@ -29,9 +29,9 @@ const Footer = () => {
         {/* Contact & Social Links */}
         <div>
           <h3 className="text-xl font-semibold">Contact</h3>
-          <p className="text-gray-400 mt-2">123 College Road, City, Country</p>
-          <p className="text-gray-400">Email: info@college.com</p>
-          <p className="text-gray-400">Phone: +123 456 7890</p>
+          <p className="text-gray-400 mt-2">Chichaiguda, Kalahandi, Orissa, Odisha 766014</p>
+          <p className="text-gray-400">Email: lcskalahandi@gmail.com</p>
+          <p className="text-gray-400">Phone: +91 9583587565<br></br> +91 8249727709<br></br>+91 7854991773<br></br>+91 9337409176</p>
 
           {/* Social Icons */}
           <div className="flex space-x-4 mt-4">

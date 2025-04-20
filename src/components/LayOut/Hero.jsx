@@ -68,7 +68,7 @@ const Hero = () => {
   };
 
   return (
-    <div className="relative w-full h-[300px] lg:h-screen md:h-[400px] overflow-hidden">
+    <div id="homebannermobile" className="relative w-full h-[300px] lg:h-screen md:h-[400px] overflow-hidden">
       {slides.map((slide, index) => (
         <div
           key={index}
@@ -89,21 +89,21 @@ const Hero = () => {
           ) : (
             <img
               src={slide.image}
-              alt={slide.title}
+              alt={slide.title.toUpperCase()}
               className="w-full h-full object-cover"
             />
           )}
           <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center text-white text-center px-4">
             <h1 className="text-4xl font-bold">
               <Typewriter
-                words={[slide.title]}
+                words={[slide.title.toUpperCase()]}
                 loop={false}
                 typeSpeed={100}
                 deleteSpeed={40}
                 cursor
               />
             </h1>
-            <p className="mt-4 text-xl">{slide.description}</p>
+            <p className="mt-4 text-xl homebannerdesc">{slide.description}</p>
             {slide.link && (
               <a
                 href={slide.link}

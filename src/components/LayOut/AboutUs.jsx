@@ -15,9 +15,9 @@ const About = () => {
     return (
         <section className="w-full flex flex-col lg:flex-row items-center justify-between px-8 lg:px-16 py-16 bg-white gap-10">
             {/* Left Side - Content */}
-            <div className="flex-1 space-y-6" data-aos="fade-right">
+            <div className="flex-1 space-y-6 aboutusmobile" data-aos="fade-right">
                 <h4 className="text-orange-500 text-4xl font-bold">ABOUT US</h4>
-                <h2 className="text-4xl font-bold">
+                <h2 className="text-4xl font-bold aboutusmobiledesc">
                     Our Education System <span className="text-orange-500">Inspires</span> You More.
                 </h2>
                 <p className="text-gray-600">
@@ -48,14 +48,10 @@ const About = () => {
 
                 <div className="flex items-center gap-8 mt-6" data-aos="zoom-in">
                     <Link to='/'>
-                        <button className="bg-orange-500 text-white px-6 py-3 rounded-lg font-semibold shadow-md hover:bg-orange-600">
-                            Discover More →
+                        <button className="bg-orange-500 text-white px-4 py-2 rounded-lg font-semibold shadow-md hover:bg-orange-600">
+                            View More →
                         </button>
                     </Link>
-                    <div className="text-green-600 font-semibold">
-                        Call Now
-                        <p className="text-lg font-bold">+2 123 654 7898</p>
-                    </div>
                 </div>
             </div>
 
