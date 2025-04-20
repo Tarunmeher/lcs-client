@@ -2,9 +2,11 @@ import { useState, useEffect } from 'react';
 import { Pen, Trash2, Plus, Bell, Newspaper, Search } from 'lucide-react';
 import NewsNotificationModal from './NewsNotificationModal';
 import { toast, ToastContainer } from 'react-toastify';
+import Loader from "../../../components/common/loader";
 const ManageNewsNotification = () => {
   // Sample data
   const [items, setItems] = useState(null);
+  const [uploading, setUploading] = useState(false);
 
   // State for modals and search
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -55,6 +57,7 @@ const ManageNewsNotification = () => {
         if (currentUrl.includes('https')) {
           url = url.replace('http', 'https')
         }
+        setUploading(true);
         const res = await fetch(`${url}/deleteNotification`, {
           method: 'DELETE',
           headers: {
@@ -65,12 +68,15 @@ const ManageNewsNotification = () => {
 
         const data = await res.json();
         if (data.status == 'success') {
+          setUploading(false);
           toast.success(data.message);
           fetchNewsAndNotification();
         } else {
+          setUploading(false);
           toast.error(data.message || 'Failed to Delete');
         }
       } catch (err) {
+        setUploading(false);
         console.error(err);
         toast.error('Something went wrong');
       }
@@ -92,6 +98,7 @@ const ManageNewsNotification = () => {
         if (currentUrl.includes('https')) {
           url = url.replace('http', 'https')
         }
+        setUploading(true);
         const res = await fetch(`${url}/updateNewsOrNotification`, {
           method: 'POST',
           headers: {},
@@ -100,12 +107,12 @@ const ManageNewsNotification = () => {
 
         const data = await res.json();
         if (res.ok) {
-          // setUploading(false);
+          setUploading(false);
           fetchNewsAndNotification();
           setIsModalOpen(false);
           toast.success(data.message);
         } else {
-          // setUploading(false);
+          setUploading(false);
           toast.error(data.message);
         }
       } else {
@@ -118,6 +125,7 @@ const ManageNewsNotification = () => {
         if (currentUrl.includes('https')) {
           url = url.replace('http', 'https')
         }
+        setUploading(true);
         const res = await fetch(`${url}/addNewsOrNotification`, {
           method: 'POST',
           headers: {},
@@ -126,17 +134,17 @@ const ManageNewsNotification = () => {
 
         const data = await res.json();
         if (res.ok) {
-          // setUploading(false);
+          setUploading(false);
           fetchNewsAndNotification();
           setIsModalOpen(false);
           toast.success(data.message);
         } else {
-          // setUploading(false);
+          setUploading(false);
           toast.error(data.message);
         }
       }
     } catch (err) {
-      // setUploading(false);
+      setUploading(false);
       console.error(err);
       toast.error('Something went wrong');
     }
@@ -171,6 +179,7 @@ const ManageNewsNotification = () => {
       if (currentUrl.includes('https')) {
         url = url.replace('http', 'https')
       }
+      setUploading(true);
       const res = await fetch(`${url}/getNewsOrNotification`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
@@ -179,11 +188,14 @@ const ManageNewsNotification = () => {
 
       const data = await res.json();
       if (res.ok) {
+        setUploading(false);
         setItems(data.results);
       } else {
+        setUploading(false);
         setItems(null);
       }
     } catch (err) {
+      setUploading(false);
       console.error(err);
       setGallery(null);
     }
@@ -291,6 +303,10 @@ const ManageNewsNotification = () => {
 
       {/* ToastContainer added here */}
       <ToastContainer position="top-right" autoClose={3000} />
+
+      {uploading && (
+        <Loader></Loader>
+      )}
     </div>
   );
 };

@@ -1,8 +1,9 @@
 import React from "react";
 import { toast, ToastContainer } from 'react-toastify';
+
 const EditStaffModal = ({ isOpen, onClose, staffData, onSave, mode }) => {
   if (!isOpen) return null;
-
+  const [uploading, setUploading] = React.useState(false);
   const [formData, setFormData] = React.useState(staffData || {});
 
   const handleChange = (e) => {
@@ -26,6 +27,7 @@ const EditStaffModal = ({ isOpen, onClose, staffData, onSave, mode }) => {
         if (currentUrl.includes('https')) {
           url = url.replace('http', 'https')
         }
+        setUploading(true);
         const res = await fetch(`${url}/addStaff`, {
           method: 'POST',
           headers: {
@@ -36,14 +38,16 @@ const EditStaffModal = ({ isOpen, onClose, staffData, onSave, mode }) => {
 
         const data = await res.json();
         if (data.status == 'success') {
-          console.log(data)
+          setUploading(false);
           toast.success(data.message);
           onClose(data.results);
         } else {
+          setUploading(false);
           toast.error(data.message || 'Failed to Add');
           onClose(data.results);
         }
       } catch (err) {
+        setUploading(false);
         console.error(err);
         toast.error('Something went wrong');
       }
@@ -60,6 +64,7 @@ const EditStaffModal = ({ isOpen, onClose, staffData, onSave, mode }) => {
         if (currentUrl.includes('https')) {
           url = url.replace('http', 'https')
         }
+        setUploading(true);
         const res = await fetch(`${url}/updateStaff/${staffData.sid}`, {
           method: 'POST',
           headers: {
@@ -70,13 +75,16 @@ const EditStaffModal = ({ isOpen, onClose, staffData, onSave, mode }) => {
 
         const data = await res.json();
         if (data.status == 'success') {
+          setUploading(false);
           toast.success(data.message);
           onClose('');
         } else {
+          setUploading(false);
           toast.error(data.message || 'Failed to Update');
           onClose('');
         }
       } catch (err) {
+        setUploading(false);
         console.error(err);
         toast.error('Something went wrong');
       }
@@ -190,6 +198,31 @@ const EditStaffModal = ({ isOpen, onClose, staffData, onSave, mode }) => {
       </div>
       {/* ToastContainer added here */}
       <ToastContainer position="top-right" autoClose={3000} />
+
+      {uploading && (
+        <div style={{ marginTop: '20px', textAlign: 'center', position: 'absolute', zIndex: 9 }}>
+          {/* Spinner loader */}
+          <div style={{
+            width: '100px',
+            height: '100px',
+            border: '4px solid #f3f3f3',
+            borderTop: '4px solid #3498db',
+            borderRadius: '50%',
+            animation: 'spin 1s linear infinite',
+            margin: '0 auto'
+          }}></div>
+          <div>uploading....</div>
+        </div>
+      )}
+
+      {/* Add keyframes animation inline */}
+      <style>
+        {`
+          @keyframes spin {
+            to { transform: rotate(360deg); }
+          }
+        `}
+      </style>
     </div>
   );
 };

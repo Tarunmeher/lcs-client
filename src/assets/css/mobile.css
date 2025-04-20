@@ -39,7 +39,7 @@
     /*Home WhyChooseUs page*/
     .whycard{
         width:300px;
-        margin-left: -40px;
+        margin-left: -10px;
     }
     .whycardparent{
         padding:2px;
@@ -54,5 +54,9 @@
         font-size: 1.2rem;
         display: inline-block;
         margin-top: -30px;
+    }
+
+    .profilepagemobile{
+        padding:5px;
     }
 }

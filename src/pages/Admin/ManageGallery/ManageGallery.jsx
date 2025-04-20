@@ -4,12 +4,12 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AddImageModal from "./AddImageModal";
 import toast from "react-hot-toast";
-
+import Loader from "../../../components/common/loader";
 const ManageGallery = () => {
   const [showModal, setShowModal] = useState(false);
   const [previewImage, setPreviewImage] = useState(null);
   const [gallery, setGallery] = useState(null);
-
+  const [uploading, setUploading] = useState(false);
   async function fetchImages() {
     try {
       const currentUrl = window.location.href;
@@ -17,6 +17,7 @@ const ManageGallery = () => {
       if (currentUrl.includes('https')) {
         url = url.replace('http', 'https')
       }
+      setUploading(true);
       const res = await fetch(`${url}/getAllPhotos`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
@@ -25,11 +26,14 @@ const ManageGallery = () => {
 
       const data = await res.json();
       if (res.ok) {
+        setUploading(false);
         setGallery(data.files);
       } else {
+        setUploading(false);
         setGallery(null);
       }
     } catch (err) {
+      setUploading(false);
       console.error(err);
       setGallery(null);
     }
@@ -51,20 +55,24 @@ const ManageGallery = () => {
       if (currentUrl.includes('https')) {
         url = url.replace('http', 'https')
       }
+      setUploading(true);
       const res = await fetch(`${url}/deleteFile`, {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({fid:fid})
+        body: JSON.stringify({ fid: fid })
       });
 
       const data = await res.json();
-      if (data.status=='success') {
+      if (data.status == 'success') {
+        setUploading(false);
         toast.success(data.message);
         setGallery(gallery.filter((item) => item.fid !== fid));
       } else {
+        setUploading(false);
         toast.error(data.message);
       }
     } catch (err) {
+      setUploading(false);
       console.error(err);
       toast.error(data.message);
     }
@@ -150,6 +158,10 @@ const ManageGallery = () => {
             </h2>
           </div>
         </div>
+      )}
+
+      {uploading && (
+        <Loader></Loader>
       )}
     </div>
   );

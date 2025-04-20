@@ -49,7 +49,7 @@ const StafDetail = () => {
                         data-aos="fade-up"
                     >
                         <img
-                            src={import.meta.env.VITE_SERVICE_URL+'/files/'+staff.profile_pic}
+                            src={staff.profile_pic?import.meta.env.VITE_SERVICE_URL+'/files/'+staff.profile_pic:import.meta.env.VITE_SERVICE_URL+'/files/maleAvatar.jpg'}
                             alt={staff.name}
                             className="w-full h-40 object-cover rounded-xl mb-4 shadow-md"
                         />

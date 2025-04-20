@@ -4,6 +4,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
+import '../../../assets/css/mobile.css';
 
 const ProfileDropdown = ({ user, onTabChange }) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -154,7 +155,7 @@ const MyProfile = () => {
     return (
         <>
             <div className="flex h-screen bg-gray-50">
-                <div className="flex-1 p-8 overflow-auto">
+                <div className="flex-1 p-8 overflow-auto profilepagemobile">
                     <div className="flex justify-between items-center mb-8">
                         <h1 className="text-2xl font-bold text-gray-800">
                             {activeTab === 'profile' ? 'Profile' : 'Security Settings'}

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { toast, ToastContainer } from 'react-toastify';
-
+import Loader from "../../../components/common/loader";
 const AddImageModal = ({ isOpen, onClose, onAdd }) => {
   const [folderName, setFolderName] = useState("");
   const [file, setFile] = useState(null);
@@ -90,29 +90,8 @@ const AddImageModal = ({ isOpen, onClose, onAdd }) => {
 
 
       {uploading && (
-        <div style={{ marginTop: '20px', textAlign: 'center', position:'absolute',zIndex:9 }}>
-          {/* Spinner loader */}
-          <div style={{
-            width: '100px',
-            height: '100px',
-            border: '4px solid #f3f3f3',
-            borderTop: '4px solid #3498db',
-            borderRadius: '50%',
-            animation: 'spin 1s linear infinite',
-            margin: '0 auto'
-          }}></div>
-          <div>uploading....</div>
-        </div>
+        <Loader></Loader>
       )}
-
-      {/* Add keyframes animation inline */}
-      <style>
-        {`
-          @keyframes spin {
-            to { transform: rotate(360deg); }
-          }
-        `}
-      </style>
     </div>
   );
 };

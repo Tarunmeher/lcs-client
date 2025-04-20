@@ -2,11 +2,11 @@ import { useState, useEffect } from 'react';
 import { Pen, Trash2, Plus, Search } from 'lucide-react';
 import AddEditEventModal from './AddEventModal';
 import { toast, ToastContainer } from 'react-toastify';
-
+import Loader from "../../../components/common/loader";
 const ManageEvent = () => {
   // Sample event data matching your image
   const [events, setEvents] = useState(null);
-
+  const [uploading, setUploading] = useState(false);
   // State for modals
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentEvent, setCurrentEvent] = useState(null);
@@ -65,6 +65,7 @@ const ManageEvent = () => {
         if (currentUrl.includes('https')) {
           url = url.replace('http', 'https')
         }
+        setUploading(true);
         const res = await fetch(`${url}/deleteEvent`, {
           method: 'DELETE',
           headers: {
@@ -75,12 +76,15 @@ const ManageEvent = () => {
 
         const data = await res.json();
         if (data.status == 'success') {
+          setUploading(false);
           toast.success(data.message);
           getEvents();
         } else {
+          setUploading(false);
           toast.error(data.message || 'Failed to Delete');
         }
       } catch (err) {
+        setUploading(false);
         console.error(err);
         toast.error('Something went wrong');
       }
@@ -97,6 +101,7 @@ const ManageEvent = () => {
         if (currentUrl.includes('https')) {
           url = url.replace('http', 'https')
         }
+        setUploading(true);
         const res = await fetch(`${url}/updateEvent`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
@@ -111,12 +116,12 @@ const ManageEvent = () => {
 
         const data = await res.json();
         if (res.ok) {
-          // setUploading(false);
+          setUploading(false);
           getEvents();
           setIsModalOpen(false);
           toast.success(data.message);
         } else {
-          // setUploading(false);
+          setUploading(false);
           toast.error(data.message);
           // setIsModalOpen(false);
         }
@@ -126,6 +131,7 @@ const ManageEvent = () => {
         if (currentUrl.includes('https')) {
           url = url.replace('http', 'https')
         }
+        setUploading(true);
         const res = await fetch(`${url}/createEvent`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -139,12 +145,12 @@ const ManageEvent = () => {
 
         const data = await res.json();
         if (res.ok) {
-          // setUploading(false);
+          setUploading(false);
           getEvents();
           setIsModalOpen(false);
           toast.success(data.message);
         } else {
-          // setUploading(false);
+          setUploading(false);
           toast.error(data.message);
           // setIsModalOpen(false);
         }
@@ -152,6 +158,7 @@ const ManageEvent = () => {
     } catch (err) {
       console.error(err);
       toast.error('Something went wrong');
+      setUploading(false);
       // setIsModalOpen(false);
     }
   };
@@ -177,6 +184,7 @@ const ManageEvent = () => {
       if (currentUrl.includes('https')) {
         url = url.replace('http', 'https')
       }
+      setUploading(true);
       const res = await fetch(`${url}/getEvents`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
@@ -185,11 +193,14 @@ const ManageEvent = () => {
 
       const data = await res.json();
       if (res.ok) {
+        setUploading(false);
         setEvents(data.results);
       } else {
+        setUploading(false);
         setEvents(null);
       }
     } catch (err) {
+      setUploading(false);
       console.error(err);
       setEvents(null);
     }
@@ -294,6 +305,10 @@ const ManageEvent = () => {
 
       {/* ToastContainer added here */}
       <ToastContainer position="top-right" autoClose={3000} />
+
+      {uploading && (
+        <Loader></Loader>
+      )}
     </div>
   );
 };

@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom'; // If you're using React Router
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
-
+import Loader from "../../../../components/common/loader";
 const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [uploading, setUploading] = useState(false);
     const navigate = useNavigate();
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -15,6 +16,8 @@ const Login = () => {
             if (currentUrl.includes('https')) {
                 url = url.replace('http', 'https')
             }
+
+            setUploading(true);
             const res = await fetch(`${url}/login`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -28,16 +31,19 @@ const Login = () => {
             console.log()
             if (data.status == 'success' && Object.keys(data.results).length) {
                 // Redirect to profile page with data
+                setUploading(false);
                 toast.success('Redirecting to profile......');
                 setTimeout(() => {
                     data.results.logged_at = new Date().toLocaleTimeString()
                     sessionStorage.setItem('userData', JSON.stringify(data));
                     navigate('/admin'); // send data to profile page
-                },1500);
+                }, 1000);
             } else {
+                setUploading(false);
                 toast.error(data.message || 'Login failed. Invalid Credential');
             }
         } catch (err) {
+            setUploading(false);
             console.error(err);
             toast.error('Something went wrong ! Please Try again');
         }
@@ -93,6 +99,10 @@ const Login = () => {
             </div>
             {/* ToastContainer added here */}
             <ToastContainer position="top-right" autoClose={3000} />
+
+            {uploading && (
+                <Loader></Loader>
+            )}
         </div>
     );
 };

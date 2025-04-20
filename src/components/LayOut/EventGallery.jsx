@@ -6,9 +6,7 @@ import { Link } from "react-router-dom";
 import banner from '../../assets/images/banner3.png'
 
 const events = [
-  { id: 1, title: "Annual Sports Meet", desc: "A grand event celebrating sportsmanship and talent.", img: "https://cdn.pixabay.com/photo/2023/08/19/23/41/ai-generated-8201364_1280.png" },
-  { id: 2, title: "Science Fair", desc: "Innovative projects by students on display.", img: "https://cdn.pixabay.com/photo/2022/02/16/04/15/cricketer-7015983_1280.jpg" },
-  { id: 3, title: "Cultural Fest", desc: "A mix of music, dance, and drama performances.", img: "https://cdn.pixabay.com/photo/2016/08/14/18/27/sailing-boat-1593613_1280.jpg" },
+
 ];
 
 const galleryImages = [
@@ -19,7 +17,7 @@ const galleryImages = [
 ];
 
 export default function EventGallery() {
-
+  const [events, setEvents] = useState([]);
   const [currentEvent, setCurrentEvent] = useState(0);
 
   useEffect(() => {
@@ -37,11 +35,11 @@ export default function EventGallery() {
       </div>
       <div
         className="flex flex-col md:flex-row p-6 bg-cover bg-center min-h-screen"
-              style={{ backgroundImage: `url(${banner})` }}
-        
+        style={{ backgroundImage: `url(${banner})` }}
+
       >
         {/* Event Section */}
-        <motion.div
+        {events.length ? (<motion.div
           className="w-full md:w-1/2 p-4"
           data-aos="fade-right"
         >
@@ -57,7 +55,22 @@ export default function EventGallery() {
               View More  →
             </button>
           </Link>
-        </motion.div>
+        </motion.div>):(<motion.div
+          className="w-full md:w-1/2 p-4"
+          data-aos="fade-right"
+        >
+          <img
+            src={`${import.meta.env.VITE_SERVICE_URL}/siteimages/event.jpg`}
+            alt={'No Events are Scheduled'}
+            className="w-full h-64 object-cover cursor-pointer rounded-md"
+          />
+          <h2 className="text-xl text-white font-bold mt-4">{'Events not Available'}</h2>
+          {/* <Link to='/Gallery/lcs-events'>
+            <button className="mt-4 px-4 py-2 bg-[#f97316] rounded-lg shadow-md hover:bg-orange-600 text-black hover:text-white font-bold transition">
+              View More  →
+            </button>
+          </Link> */}
+        </motion.div>)}
 
 
         {/* Gallery Section */}
