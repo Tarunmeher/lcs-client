@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom'; // If you're using React Router
 import { useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
 
 const Login = () => {
     const [username, setUsername] = useState('');
@@ -11,32 +12,35 @@ const Login = () => {
         try {
             const currentUrl = window.location.href;
             let url = import.meta.env.VITE_SERVICE_URL;
-            if(currentUrl.includes('https')){
-                url = url.replace('http','https')
+            if (currentUrl.includes('https')) {
+                url = url.replace('http', 'https')
             }
             const res = await fetch(`${url}/login`, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                username:username,
-                password:password
-              }),
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    username: username,
+                    password: password
+                }),
             });
-            
+
             const data = await res.json();
             console.log()
-            if (data.status=='success' && Object.keys(data.results).length) {
-              // Redirect to profile page with data
-              data.results.logged_at = new Date().toLocaleTimeString()
-              sessionStorage.setItem('userData', JSON.stringify(data));
-              navigate('/admin'); // send data to profile page
+            if (data.status == 'success' && Object.keys(data.results).length) {
+                // Redirect to profile page with data
+                toast.success('Redirecting to profile......');
+                setTimeout(() => {
+                    data.results.logged_at = new Date().toLocaleTimeString()
+                    sessionStorage.setItem('userData', JSON.stringify(data));
+                    navigate('/admin'); // send data to profile page
+                },1500);
             } else {
-              alert(data.message || 'Login failed. Invalid Credential');
+                toast.error(data.message || 'Login failed. Invalid Credential');
             }
-          } catch (err) {
+        } catch (err) {
             console.error(err);
-            alert('Something went wrong');
-          }
+            toast.error('Something went wrong ! Please Try again');
+        }
     };
 
     return (
@@ -87,6 +91,8 @@ const Login = () => {
                     </button>
                 </form>
             </div>
+            {/* ToastContainer added here */}
+            <ToastContainer position="top-right" autoClose={3000} />
         </div>
     );
 };

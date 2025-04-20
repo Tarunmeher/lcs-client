@@ -68,6 +68,18 @@ const AddEditEventModal = ({
                 className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3"
               />
             </div>
+            <div>
+            <input
+                type="text"
+                name="time"
+                id="time"
+                value={currentEvent.time}
+                onChange={onChange}
+                required
+                placeholder='e.g 12:00 PM'
+                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3"
+              />
+            </div>
           </div>
 
           <div className="mt-5 sm:mt-6 sm:grid sm:grid-cols-2 sm:gap-3">

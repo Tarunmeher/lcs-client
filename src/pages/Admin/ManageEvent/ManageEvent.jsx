@@ -20,11 +20,11 @@ const ManageEvent = () => {
   };
 
   const eventStatus = (dateString) => {
-    if (new Date() == new Date(dateString)){
+    if (new Date() == new Date(dateString)) {
       return 'Today';
-    }else if(new Date() < new Date(dateString)){
+    } else if (new Date() < new Date(dateString)) {
       return 'Upcoming';
-    }else{
+    } else {
       return 'Completed';
     }
   };
@@ -57,9 +57,33 @@ const ManageEvent = () => {
   };
 
   // Handle delete event
-  const handleDelete = (id) => {
+  const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this event?')) {
-      setEvents(events.filter(event => event.id !== id));
+      try {
+        const currentUrl = window.location.href;
+        let url = import.meta.env.VITE_SERVICE_URL;
+        if (currentUrl.includes('https')) {
+          url = url.replace('http', 'https')
+        }
+        const res = await fetch(`${url}/deleteEvent`, {
+          method: 'DELETE',
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ id: id }),
+        });
+
+        const data = await res.json();
+        if (data.status == 'success') {
+          toast.success(data.message);
+          getEvents();
+        } else {
+          toast.error(data.message || 'Failed to Delete');
+        }
+      } catch (err) {
+        console.error(err);
+        toast.error('Something went wrong');
+      }
     }
   };
 
@@ -77,17 +101,18 @@ const ManageEvent = () => {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            id:currentEvent.id,
+            id: currentEvent.id,
             event_name: currentEvent.event_name,
             description: currentEvent.description,
-            scheduled_date: currentEvent.scheduled_date
+            scheduled_date: currentEvent.scheduled_date,
+            time: currentEvent.time
           })
         });
 
         const data = await res.json();
         if (res.ok) {
           // setUploading(false);
-          setEvents(data.results);
+          getEvents();
           setIsModalOpen(false);
           toast.success(data.message);
         } else {
@@ -107,14 +132,15 @@ const ManageEvent = () => {
           body: JSON.stringify({
             event_name: currentEvent.event_name,
             description: currentEvent.description,
-            scheduled_date: currentEvent.scheduled_date
+            scheduled_date: currentEvent.scheduled_date,
+            time: currentEvent.time
           })
         });
 
         const data = await res.json();
         if (res.ok) {
           // setUploading(false);
-          setEvents(data.results);
+          getEvents();
           setIsModalOpen(false);
           toast.success(data.message);
         } else {
@@ -208,6 +234,7 @@ const ManageEvent = () => {
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Event Name</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Scheduled On</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Scheduled At</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
               </tr>
@@ -222,13 +249,16 @@ const ManageEvent = () => {
                     {formatDate(event.scheduled_date)}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                  <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                    <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
                       ${eventStatus(event.scheduled_date) === 'Upcoming' ? 'bg-blue-100 text-blue-800' :
-                      eventStatus(event.scheduled_date) === 'Completed' ? 'bg-green-100 text-green-800' :
+                        eventStatus(event.scheduled_date) === 'Completed' ? 'bg-green-100 text-green-800' :
                           'bg-gray-100 text-gray-800'}`}>
                       {eventStatus(event.scheduled_date)}
-                      
+
                     </span>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    {event.time?event.time:'Timing not available'}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium flex">
                     <button
