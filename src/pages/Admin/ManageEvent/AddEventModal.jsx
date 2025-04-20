@@ -34,9 +34,9 @@ const AddEditEventModal = ({
               <label htmlFor="eventName" className="block text-sm font-medium text-gray-700">Event Name</label>
               <input
                 type="text"
-                name="eventName"
-                id="eventName"
-                value={currentEvent.eventName}
+                name="event_name"
+                id="event_name"
+                value={currentEvent.event_name}
                 onChange={onChange}
                 required
                 className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3"
@@ -60,29 +60,13 @@ const AddEditEventModal = ({
               <label htmlFor="scheduledOn" className="block text-sm font-medium text-gray-700">Scheduled On</label>
               <input
                 type="date"
-                name="scheduledOn"
-                id="scheduledOn"
-                value={currentEvent.scheduledOn}
+                name="scheduled_date"
+                id="scheduled_date"
+                value={currentEvent.scheduled_date}
                 onChange={onChange}
                 required
                 className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3"
               />
-            </div>
-
-            <div>
-              <label htmlFor="status" className="block text-sm font-medium text-gray-700">Status</label>
-              <select
-                name="status"
-                id="status"
-                value={currentEvent.status}
-                onChange={onChange}
-                required
-                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3"
-              >
-                <option value="Upcoming">Upcoming</option>
-                <option value="Completed">Completed</option>
-                <option value="Cancelled">Cancelled</option>
-              </select>
             </div>
           </div>
 

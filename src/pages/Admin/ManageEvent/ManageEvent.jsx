@@ -1,42 +1,15 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Pen, Trash2, Plus, Search } from 'lucide-react';
 import AddEditEventModal from './AddEventModal';
+import { toast, ToastContainer } from 'react-toastify';
 
 const ManageEvent = () => {
   // Sample event data matching your image
-  const [events, setEvents] = useState([
-    {
-      id: 1,
-      eventName: 'Annual Function',
-      description: 'Student Annual Function 2025',
-      scheduledOn: '2025-04-20',
-      status: 'Upcoming'
-    },
-    {
-      id: 2,
-      eventName: 'guru Diwas',
-      description: 'Teachers Day',
-      scheduledOn: '2025-05-15',
-      status: 'Upcoming'
-    },
-    {
-      id: 3,
-      eventName: 'Sports Day',
-      description: 'Inter-department sports competition',
-      scheduledOn: '2025-03-10',
-      status: 'Completed'
-    }
-  ]);
+  const [events, setEvents] = useState(null);
 
   // State for modals
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [currentEvent, setCurrentEvent] = useState({
-    id: '',
-    eventName: '',
-    description: '',
-    scheduledOn: '',
-    status: 'Upcoming'
-  });
+  const [currentEvent, setCurrentEvent] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -46,11 +19,21 @@ const ManageEvent = () => {
     return new Date(dateString).toLocaleDateString('en-US', options);
   };
 
+  const eventStatus = (dateString) => {
+    if (new Date() == new Date(dateString)){
+      return 'Today';
+    }else if(new Date() < new Date(dateString)){
+      return 'Upcoming';
+    }else{
+      return 'Completed';
+    }
+  };
+
   // Filter events based on search term
-  const filteredEvents = events.filter(event => {
+  const filteredEvents = events && events.filter(event => {
     const searchLower = searchTerm.toLowerCase();
     return (
-      event.eventName.toLowerCase().includes(searchLower) ||
+      event.event_name.toLowerCase().includes(searchLower) ||
       event.description.toLowerCase().includes(searchLower)
     );
   });
@@ -58,11 +41,9 @@ const ManageEvent = () => {
   // Handle add new event
   const handleAdd = () => {
     setCurrentEvent({
-      id: '',
-      eventName: '',
+      event_name: '',
       description: '',
-      scheduledOn: '',
-      status: 'Upcoming'
+      scheduled_date: ''
     });
     setIsEditing(false);
     setIsModalOpen(true);
@@ -83,24 +64,70 @@ const ManageEvent = () => {
   };
 
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    try {
+      if (isEditing) {
+        const currentUrl = window.location.href;
+        let url = import.meta.env.VITE_SERVICE_URL;
+        if (currentUrl.includes('https')) {
+          url = url.replace('http', 'https')
+        }
+        const res = await fetch(`${url}/updateEvent`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            id:currentEvent.id,
+            event_name: currentEvent.event_name,
+            description: currentEvent.description,
+            scheduled_date: currentEvent.scheduled_date
+          })
+        });
 
-    if (isEditing) {
-      // Update existing event
-      setEvents(events.map(event =>
-        event.id === currentEvent.id ? currentEvent : event
-      ));
-    } else {
-      // Add new event
-      const newEvent = {
-        ...currentEvent,
-        id: Math.max(...events.map(e => e.id)) + 1
-      };
-      setEvents([...events, newEvent]);
+        const data = await res.json();
+        if (res.ok) {
+          // setUploading(false);
+          setEvents(data.results);
+          setIsModalOpen(false);
+          toast.success(data.message);
+        } else {
+          // setUploading(false);
+          toast.error(data.message);
+          // setIsModalOpen(false);
+        }
+      } else {
+        const currentUrl = window.location.href;
+        let url = import.meta.env.VITE_SERVICE_URL;
+        if (currentUrl.includes('https')) {
+          url = url.replace('http', 'https')
+        }
+        const res = await fetch(`${url}/createEvent`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            event_name: currentEvent.event_name,
+            description: currentEvent.description,
+            scheduled_date: currentEvent.scheduled_date
+          })
+        });
+
+        const data = await res.json();
+        if (res.ok) {
+          // setUploading(false);
+          setEvents(data.results);
+          setIsModalOpen(false);
+          toast.success(data.message);
+        } else {
+          // setUploading(false);
+          toast.error(data.message);
+          // setIsModalOpen(false);
+        }
+      }
+    } catch (err) {
+      console.error(err);
+      toast.error('Something went wrong');
+      // setIsModalOpen(false);
     }
-
-    setIsModalOpen(false);
   };
 
   // Handle input changes
@@ -116,6 +143,35 @@ const ManageEvent = () => {
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
   };
+
+  const getEvents = async () => {
+    try {
+      const currentUrl = window.location.href;
+      let url = import.meta.env.VITE_SERVICE_URL;
+      if (currentUrl.includes('https')) {
+        url = url.replace('http', 'https')
+      }
+      const res = await fetch(`${url}/getEvents`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+        // body: JSON.stringify({}),
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        setEvents(data.results);
+      } else {
+        setEvents(null);
+      }
+    } catch (err) {
+      console.error(err);
+      setEvents(null);
+    }
+  }
+
+  useEffect(() => {
+    getEvents();
+  }, []);
 
   return (
     <div className="p-6">
@@ -157,20 +213,21 @@ const ManageEvent = () => {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {filteredEvents.map((event, index) => (
+              {filteredEvents && filteredEvents.map((event, index) => (
                 <tr key={event.id} className="hover:bg-gray-50">
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{index + 1}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{event.eventName}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{event.event_name}</td>
                   <td className="px-6 py-4 text-sm text-gray-500 max-w-xs">{event.description}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {formatDate(event.scheduledOn)}
+                    {formatDate(event.scheduled_date)}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
-                      ${event.status === 'Upcoming' ? 'bg-blue-100 text-blue-800' :
-                        event.status === 'Completed' ? 'bg-green-100 text-green-800' :
+                  <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                      ${eventStatus(event.scheduled_date) === 'Upcoming' ? 'bg-blue-100 text-blue-800' :
+                      eventStatus(event.scheduled_date) === 'Completed' ? 'bg-green-100 text-green-800' :
                           'bg-gray-100 text-gray-800'}`}>
-                      {event.status}
+                      {eventStatus(event.scheduled_date)}
+                      
                     </span>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium flex">
@@ -203,6 +260,10 @@ const ManageEvent = () => {
         onChange={handleInputChange}
         onSubmit={handleSubmit}
       />
+
+
+      {/* ToastContainer added here */}
+      <ToastContainer position="top-right" autoClose={3000} />
     </div>
   );
 };

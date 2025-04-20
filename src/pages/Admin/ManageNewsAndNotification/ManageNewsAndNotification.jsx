@@ -4,7 +4,7 @@ import NewsNotificationModal from './NewsNotificationModal';
 import { toast, ToastContainer } from 'react-toastify';
 const ManageNewsNotification = () => {
   // Sample data
-  const [items, setItems] = useState();
+  const [items, setItems] = useState(null);
 
   // State for modals and search
   const [isModalOpen, setIsModalOpen] = useState(false);
