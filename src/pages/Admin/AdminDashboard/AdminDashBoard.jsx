@@ -1,5 +1,5 @@
 import { FaChalkboardTeacher, FaUserGraduate, FaUserTie, FaUserShield } from "react-icons/fa";
-// import SalaryStatus from "./SalaryStatus";
+import ManageHomePage from "./ManageHomePage";
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -59,9 +59,9 @@ const AdminDashBoard = () => {
                     </div>
                 ))}
             </div>
-            {/* <div className="mt-10">
-                <SalaryStatus />
-            </div> */}
+            <div className="mt-10">
+                <ManageHomePage />
+            </div>
 
         </>
     );

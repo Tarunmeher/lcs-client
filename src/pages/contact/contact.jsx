@@ -16,7 +16,7 @@ const Contact = () => {
                         <div className="flex items-start">
                             <span className="text-blue-500 text-lg mr-2">📍</span>
                             <p>
-                                Lambodar Higher Secondary College Of Science (LCS)<br />
+                                Lambodar Higher Secondary School Of Science (LCS)<br />
                                 Kalahandi University <br />
                                 <a
                                     href="https://maps.google.com?q=Patia,Bhubaneswar,Odisha,India"
@@ -34,42 +34,43 @@ const Contact = () => {
                             <span className="text-blue-500 text-lg mr-2">📧</span>
                             <p>
                                 <a
-                                    href="mailto:kiit@kiit.ac.in"
+                                    href="lcskalahandi@gmail.com"
                                     className="text-blue-500 hover:underline"
                                 >
-                                    LCS@LCS.ac.in
-                                </a>
-                                <br />
-                                <a
-                                    href="mailto:admission@kiit.ac.in"
-                                    className="text-blue-500 hover:underline"
-                                >
-                                    admission@LCS.ac.in
+                                    lcskalahandi@gmail.com
                                 </a>
                             </p>
                         </div>
                         <div className="flex items-center">
                             <span className="text-blue-500 text-lg mr-2">📞</span>
-                            <p>+91 674 2725113</p>
+                            <p>+91 9583587565</p>
+                        </div>
+                        <div className="flex items-center">
+                            <span className="text-blue-500 text-lg mr-2">📞</span>
+                            <p>+91 8249727709</p>
+                        </div>
+                        <div className="flex items-center">
+                            <span className="text-blue-500 text-lg mr-2">📞</span>
+                            <p>+91 9337409176</p>
                         </div>
                         <div className="flex items-center">
                             <span className="text-blue-500 text-lg mr-2">📞</span>
                             <p>
                                 Admission Contact:
-                                <a href="tel:8080785785" className="text-blue-500 hover:underline">
-                                    8080 785 785
+                                <a href="tel:7854991773" className="text-blue-500 hover:underline">
+                                    +91 7854991773
                                 </a>
                             </p>
                         </div>
                         <div className="flex items-center">
                             <span className="text-blue-500 text-lg mr-2">🌐</span>
                             <a
-                                href="https://kiit.ac.in"
+                                href="https://lambodargroupofinstitutions.in/"
                                 className="text-blue-500 hover:underline"
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
-                                LCS.ac.in
+                                https://lambodargroupofinstitutions.in
                             </a>
                         </div>
                     </div>

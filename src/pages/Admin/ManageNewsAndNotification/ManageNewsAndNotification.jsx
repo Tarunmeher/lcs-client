@@ -197,7 +197,7 @@ const ManageNewsNotification = () => {
     } catch (err) {
       setUploading(false);
       console.error(err);
-      setGallery(null);
+      setItems(null);
     }
   }
 

@@ -13,31 +13,6 @@ import { BsFillPersonLinesFill } from "react-icons/bs";
 import { HiArrowRight } from "react-icons/hi";
 import { Typewriter } from "react-simple-typewriter";
 
-const slides = [
-  {
-    title: "Lambodar Higher Secondary School of Science",
-    description: "Innovative e-learning solutions for the next generation of students.",
-    image: import.meta.env.VITE_SERVICE_URL + '/siteimages/collegebnr.jpg',
-    // link: "/tillotamma-home",
-  },
-  {
-    title: "Lambodar Higher Secondary School of Science",
-    description: "Shaping the future with quality education.",
-    image: import.meta.env.VITE_SERVICE_URL + '/siteimages/class4.jpg',
-    // link: "/tillotamma-home",
-  },
-  {
-    title: "Lambodar Higher Secondary School of Science",
-    description: "Shaping the future with quality education.",
-    image: import.meta.env.VITE_SERVICE_URL + '/siteimages/entrance.jpg',
-  },
-  {
-    title: "Lambodar Higher Secondary School of Science",
-    description: "Shaping the future with quality education.",
-    image: import.meta.env.VITE_SERVICE_URL + '/siteimages/class6.jpg',
-    // link: "/lps-home",
-  },
-];
 
 const socialLinks = [
   { name: "LinkedIn", icon: <FaLinkedin size={30} />, url: "https://linkedin.com", bgColor: "bg-blue-600" },
@@ -50,26 +25,55 @@ const socialLinks = [
 
 const Hero = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [slides, setSlides] = useState(null);
+
+
+  const fetchSlides = async () => {
+    try {
+      const currentUrl = window.location.href;
+      let url = import.meta.env.VITE_SERVICE_URL;
+      if (currentUrl.includes('https')) {
+        url = url.replace('http', 'https')
+      }
+      const res = await fetch(`${url}/getBannerImages`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+        // body: JSON.stringify({}),
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        setSlides(data.results);
+      } else {
+        setSlides(null);
+      }
+    } catch (err) {
+      console.error(err);
+      setSlides(null);
+    }
+  }
+
   useEffect(() => {
+    fetchSlides();
     setTimeout(function(){
       nextSlide();
     },5000);
   }, []);
 
   const nextSlide = () => {
-    setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
+    setCurrentSlide((prev) => (prev === 3 ? 0 : prev + 1));
     setTimeout(function(){
       nextSlide();
     },5000);
   };
 
   const prevSlide = () => {
-    setCurrentSlide((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
+    setCurrentSlide((prev) => (prev === 0 ? 3 : prev - 1));
   };
 
   return (
     <div id="homebannermobile" className="relative w-full h-[300px] lg:h-screen md:h-[400px] overflow-hidden">
-      {slides.map((slide, index) => (
+      {slides && slides.map((slide, index) => (
         <div
           key={index}
           className={`absolute inset-0 transition-transform duration-700 ease-in-out ${index === currentSlide ? "translate-x-0" : "translate-x-full"
@@ -88,7 +92,7 @@ const Hero = () => {
             </video>
           ) : (
             <img
-              src={slide.image}
+              src={import.meta.env.VITE_SERVICE_URL + '/files/' + slide.profile_pic}
               alt={slide.title.toUpperCase()}
               className="w-full h-full object-cover"
             />
