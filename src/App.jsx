@@ -4,7 +4,7 @@ import { Route, Routes, useLocation } from "react-router-dom";
 import LayOut from "./components/LayOut/LayOut";
 import Home from "./pages/Home/Home";
 import LPSHome from "./pages/LPS/LPSHome";
-import TillotammaHome from "./pages/Tillotamma/TillotammaHome";
+import TillotammaHome from "./pages/Tillotamma/Home";
 import SummerCourseApply from "./pages/Home/Apply/SummerCourseApply";
 import ViewStudentDetail from "./pages/Home/Apply/ViewStudentDetail";
 import ContactUs from "./pages/contact/ContactUs";
@@ -26,6 +26,8 @@ import ManageGallery from "./pages/Admin/ManageGallery/ManageGallery";
 import Login from "./pages/Admin/AdminLogin/Auth/Login";
 import Help from "./pages/Admin/Help/Help";
 import MyProfile from "./pages/Admin/MyProfile/MyProfile";
+import TillotammaLayOut from "./pages/Tillotamma/TillotammaLayout/LayOut";
+import TillotammaAbout from "./pages/Tillotamma/TillotammaLayout/AboutUs";
 
 const App = () => {
   const location = useLocation();
@@ -65,7 +67,12 @@ const App = () => {
 
         {/* Tillotamma Pages */}
         {isTillotammaPage && (
-          <Route path="/tillotamma-home" element={<TillotammaHome />} />
+          <>
+            <Route path="/tillotamma-home" element={<TillotammaHome />} />
+            <Route path="/" element={<TillotammaLayOut />}>
+              <Route path="/aboutus" element={<TillotammaAbout />} />
+            </Route>
+          </>
         )}
 
         {/* Admin Panel Routes under AdminLayout */}

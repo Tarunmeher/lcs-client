@@ -1,24 +1,30 @@
-import React from "react";
+import React, { useEffect } from "react";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
-const LpsAbout = () => {
+const TillotammaAbout = () => {
+  useEffect(() => {
+    AOS.init({ duration: 1000 });
+  }, []);
+
   return (
     <section className="py-16 px-4 bg-white">
       <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-10 items-center">
         {/* Left: Image */}
-        <div className="relative">
+        <div className="relative" data-aos="fade-right">
           <div className="absolute -left-4 -bottom-4 w-full h-full border-l-[10px] border-b-[10px] border-[#7C2D58] z-0"></div>
           <img
-            src="https://tebewebe.online/edupreme/wp-content/uploads/sites/63/2023/11/group-of-happy-international-students-posing-outdoors-near-university-building-1536x1025.jpg" // Replace with actual image path or import
+            src="https://tebewebe.online/edupreme/wp-content/uploads/sites/63/2023/11/group-of-happy-international-students-posing-outdoors-near-university-building-1536x1025.jpg"
             alt="Students"
             className="relative z-10 rounded-md shadow-lg"
           />
         </div>
 
         {/* Right: Text */}
-        <div>
+        <div data-aos="fade-left">
           <h4 className="uppercase text-sm text-gray-600 mb-2 tracking-widest">About Campus</h4>
           <h2 className="text-4xl font-semibold mb-4 leading-tight">
-            Welcome to Edupreme University <br /> School of Education
+            Welcome to Tilottama College Of Science
           </h2>
           <p className="text-gray-600 mb-4">
             Sem feugiat nam diam eu quis placerat amet mollis. Himenaeos blandit montes massa ad luctus.
@@ -37,4 +43,4 @@ const LpsAbout = () => {
   );
 };
 
-export default LpsAbout;
+export default TillotammaAbout;

@@ -49,7 +49,7 @@ export default function HeroSlider() {
           prevEl: '.swiper-button-prev',
         }}
         pagination={{ clickable: true }}
-        autoplay={{ delay: 5000, disableOnInteraction: false }}
+        autoplay={{ delay: 2000, disableOnInteraction: false }}
         loop
         className="w-full h-full"
       >
@@ -70,10 +70,6 @@ export default function HeroSlider() {
               <div className="relative z-10 text-center text-white px-4" data-aos="fade-up">
                 <h2 className="text-4xl font-bold mb-4">{slide.title}</h2>
                 <p className="text-lg mb-6">{slide.description}</p>
-                <div className="flex justify-center gap-4">
-                  <button className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-sm" data-aos="fade-right">About More...</button>
-                  <button className="px-6 py-2 bg-gray-600 hover:bg-gray-700 text-white font-semibold rounded-sm" data-aos="fade-left">Learn More...</button>
-                </div>
               </div>
             </div>
           </SwiperSlide>

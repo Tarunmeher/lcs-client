@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { Menu, X, ChevronDown } from "lucide-react";
-import AdmissionBanner from "./banner/AdmissionBanner";
+import AdmissionBanner from "./Banner/AdmissionBanner";
 
-export default function LpsNavbar() {
+export default function TillotammaNavbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [orgDropdown, setOrgDropdown] = useState(false);
   const [acadDropdown, setAcadDropdown] = useState(false);
@@ -35,12 +35,12 @@ export default function LpsNavbar() {
     <>
       <nav className="bg-white shadow-md p-4 z-50 relative">
         <div className="container mx-auto flex justify-between items-center">
-          <div className="text-2xl font-bold text-black">LPS</div>
+          <div className="text-2xl font-bold text-black">Tilottama</div>
 
           {/* Desktop Menu */}
           <div className="hidden md:flex space-x-6 items-center relative z-50">
-            <Link to="/lps-home"  className="hover:text-blue-500">Home</Link>
-            <Link to="/lps-about" className="hover:text-blue-500">About Us</Link>
+            <Link to="/tillotamma-home" className="hover:text-blue-500">Home</Link>
+            <Link to="/aboutus" className="hover:text-blue-500">About Us</Link>
 
             <div className="relative z-50" ref={galleryRef}>
               <button
@@ -101,7 +101,7 @@ export default function LpsNavbar() {
               )}
             </div>
 
-            <Link to="/lps-contact" className="hover:text-blue-500">Contact</Link>
+            <Link to="/tillotamma-contact" className="hover:text-blue-500">Contact</Link>
             <button
               className="bg-[#A4163A] text-white px-4 py-2 rounded"
               onClick={() => setBannerVisible(true)}
@@ -117,7 +117,7 @@ export default function LpsNavbar() {
 
         {isOpen && (
           <div className="md:hidden flex flex-col space-y-2 p-4 bg-white shadow-md relative z-40">
-            <Link to="/lps-home" className="hover:text-blue-500">Home</Link>
+            <Link to="/tillotamma-home" className="hover:text-blue-500">Home</Link>
             <Link to="/about" className="hover:text-blue-500">About Us</Link>
 
             <div>
@@ -167,7 +167,7 @@ export default function LpsNavbar() {
               )}
             </div>
 
-            <Link to="/lps-contact" className="hover:text-blue-500">Contact</Link>
+            <Link to="/tillotamma-contact" className="hover:text-blue-500">Contact</Link>
             <button
               className="bg-[#A4163A] text-white px-4 py-2 rounded"
               onClick={() => setBannerVisible(true)}
