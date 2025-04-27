@@ -7,7 +7,7 @@ const LpsLayOut = () => {
     return (
         <div>
             <header>
-                <LpsTopBar />
+                {/* <LpsTopBar /> */}
                 <LpsNavbar />
             </header>
 

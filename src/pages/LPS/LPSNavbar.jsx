@@ -33,47 +33,47 @@ export default function LpsNavbar() {
 
   return (
     <>
-      <nav className="bg-white shadow-md p-4 z-50 relative">
+      <nav className="bg-transparent p-4 z-50 absolute top-0 left-0 w-full">
         <div className="container mx-auto flex justify-between items-center">
-          <div className="text-2xl font-bold text-black">LPS</div>
+          <div className="text-2xl font-bold text-white">LPS</div>
 
           {/* Desktop Menu */}
           <div className="hidden md:flex space-x-6 items-center relative z-50">
-            <Link to="/lps-home"  className="hover:text-blue-500">Home</Link>
-            <Link to="/lps-about" className="hover:text-blue-500">About Us</Link>
+            <Link to="/lps-home" className="hover:text-blue-300 text-white">Home</Link>
+            <Link to="/lps-about" className="hover:text-blue-300 text-white">About Us</Link>
 
-            <div className="relative z-50" ref={galleryRef}>
+            <div className="relative" ref={galleryRef}>
               <button
                 onClick={() => {
                   setGalleryDropdown(!galleryDropdown);
                   setOrgDropdown(false);
                   setAcadDropdown(false);
                 }}
-                className="flex items-center hover:text-blue-500"
+                className="flex items-center hover:text-blue-300 text-white"
               >
                 Gallery <ChevronDown className="ml-1 w-4 h-4" />
               </button>
               {galleryDropdown && (
-                <div className="absolute bg-white shadow-md mt-2 py-2 w-44 rounded-md z-50">
+                <div className="absolute bg-white text-black shadow-md mt-2 py-2 w-44 rounded-md z-50">
                   <Link to="/gallery/photos" className="block px-4 py-2 hover:bg-gray-100">Photos</Link>
                   <Link to="/gallery/videos" className="block px-4 py-2 hover:bg-gray-100">Videos</Link>
                 </div>
               )}
             </div>
 
-            <div className="relative z-50" ref={orgRef}>
+            <div className="relative" ref={orgRef}>
               <button
                 onClick={() => {
                   setOrgDropdown(!orgDropdown);
                   setGalleryDropdown(false);
                   setAcadDropdown(false);
                 }}
-                className="flex items-center hover:text-blue-500"
+                className="flex items-center hover:text-blue-300 text-white"
               >
                 Organisation <ChevronDown className="ml-1 w-4 h-4" />
               </button>
               {orgDropdown && (
-                <div className="absolute bg-white shadow-md mt-2 py-2 w-44 rounded-md z-50">
+                <div className="absolute bg-white text-black shadow-md mt-2 py-2 w-44 rounded-md z-50">
                   <Link to="/organisation/vision" className="block px-4 py-2 hover:bg-gray-100">Vision & Mission</Link>
                   <Link to="/organisation/leadership" className="block px-4 py-2 hover:bg-gray-100">Leadership</Link>
                   <Link to="/organisation/departments" className="block px-4 py-2 hover:bg-gray-100">Departments</Link>
@@ -81,19 +81,19 @@ export default function LpsNavbar() {
               )}
             </div>
 
-            <div className="relative z-50" ref={acadRef}>
+            <div className="relative" ref={acadRef}>
               <button
                 onClick={() => {
                   setAcadDropdown(!acadDropdown);
                   setOrgDropdown(false);
                   setGalleryDropdown(false);
                 }}
-                className="flex items-center hover:text-blue-500"
+                className="flex items-center hover:text-blue-300 text-white"
               >
                 Academics <ChevronDown className="ml-1 w-4 h-4" />
               </button>
               {acadDropdown && (
-                <div className="absolute bg-white shadow-md mt-2 py-2 w-44 rounded-md z-50">
+                <div className="absolute bg-white text-black shadow-md mt-2 py-2 w-44 rounded-md z-50">
                   <Link to="/academics/programs" className="block px-4 py-2 hover:bg-gray-100">Programs</Link>
                   <Link to="/academics/curriculum" className="block px-4 py-2 hover:bg-gray-100">Curriculum</Link>
                   <Link to="/academics/examinations" className="block px-4 py-2 hover:bg-gray-100">Examinations</Link>
@@ -101,24 +101,27 @@ export default function LpsNavbar() {
               )}
             </div>
 
-            <Link to="/lps-contact" className="hover:text-blue-500">Contact</Link>
+            <Link to="/lps-contact" className="hover:text-blue-300 text-white">Contact</Link>
+
             <button
-              className="bg-[#A4163A] text-white px-4 py-2 rounded"
+              className="bg-[#1b7343] text-white px-4 py-2 rounded"
               onClick={() => setBannerVisible(true)}
             >
               Admission Open
             </button>
           </div>
 
-          <button className="md:hidden z-50" onClick={() => setIsOpen(!isOpen)}>
+          {/* Mobile Menu Button */}
+          <button className="md:hidden z-50 text-white" onClick={() => setIsOpen(!isOpen)}>
             {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
 
+        {/* Mobile Menu */}
         {isOpen && (
-          <div className="md:hidden flex flex-col space-y-2 p-4 bg-white shadow-md relative z-40">
+          <div className="md:hidden flex flex-col space-y-2 p-4 bg-white text-black shadow-md relative z-40">
             <Link to="/lps-home" className="hover:text-blue-500">Home</Link>
-            <Link to="/about" className="hover:text-blue-500">About Us</Link>
+            <Link to="/lps-about" className="hover:text-blue-500">About Us</Link>
 
             <div>
               <button
@@ -168,6 +171,7 @@ export default function LpsNavbar() {
             </div>
 
             <Link to="/lps-contact" className="hover:text-blue-500">Contact</Link>
+
             <button
               className="bg-[#A4163A] text-white px-4 py-2 rounded"
               onClick={() => setBannerVisible(true)}
