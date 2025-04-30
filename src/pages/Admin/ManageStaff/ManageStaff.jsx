@@ -42,17 +42,18 @@ const ManageStaff = () => {
           setStaffData(data.results);
         } else {
           setUploading(false);
+          setStaffData([]);
           toast.error('No Staff Found');
         }
       } else {
         setUploading(false);
-        setStaffData(null);
+        setStaffData([]);
         toast.error(data.message || 'No Staff Found');
       }
     } catch (err) {
       setUploading(false);
       console.error(err);
-      setStaffData(null);
+      setStaffData([]);
       toast.error('Something Went Wrong');
     }
   };
